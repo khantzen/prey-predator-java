@@ -1,10 +1,24 @@
 package fr.noether.preypredator.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
 public class World {
     private final int worldSize;
+    private final List<Territory> territories;
 
     private World(Builder builder) {
         this.worldSize = builder.totalLine * builder.totalColumn;
+
+        this.territories = new ArrayList<>();
+
+        for (int line = 0; line < builder.totalLine; line++) {
+            for (int column = 0; column < builder.totalColumn; column++) {
+                Coord position = Coord.of(line, column);
+                territories.add(Territory.at(position));
+            }
+        }
     }
 
     public int size() {
@@ -12,7 +26,12 @@ public class World {
     }
 
     public Territory findTerritoryAt(Coord position) {
-        return new Territory();
+        Predicate<Territory> byWantedPosition = t -> t.position().equals(position);
+
+        return this.territories.stream()
+                .filter(byWantedPosition)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public static class Builder {
