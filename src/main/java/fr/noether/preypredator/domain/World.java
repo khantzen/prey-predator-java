@@ -11,6 +11,10 @@ public class World {
         return this.worldSize;
     }
 
+    public Territory findTerritoryAt(Coord position) {
+        return new Territory();
+    }
+
     public static class Builder {
         private int totalLine;
         private int totalColumn;
