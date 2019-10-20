@@ -25,6 +25,11 @@ public class World {
             territoryAt(coord).addRabbit();
         }
 
+        for (int i = 0; i < builder.baseFoxCount; i++) {
+            Coord coord = builder.coordGenerator.next();
+            territoryAt(coord).addFox();
+        }
+
     }
 
     public int size() {
@@ -45,6 +50,7 @@ public class World {
         private int totalColumn;
         private int baseRabbitCount;
         private CoordGenerator coordGenerator;
+        private int baseFoxCount;
 
         public Builder totalLine(int totalLine) {
             this.totalLine = totalLine;
@@ -58,6 +64,11 @@ public class World {
 
         public Builder baseRabbitCount(int baseRabbitCount) {
             this.baseRabbitCount = baseRabbitCount;
+            return this;
+        }
+
+        public Builder baseFoxCount(int baseFoxCount) {
+            this.baseFoxCount = baseFoxCount;
             return this;
         }
 

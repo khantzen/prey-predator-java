@@ -62,4 +62,28 @@ public class WorldGenerationTest {
         Assertions.assertThat(territoryL0C0.totalRabbit()).isEqualTo(2);
         Assertions.assertThat(territoryL2C2.totalRabbit()).isEqualTo(1);
     }
+
+    @Test
+    public void world_should_set_foxes_following_the_coord_generator() {
+        CoordGenerator mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(0,0),
+                        Coord.of(2, 2),
+                        Coord.of(0, 0)
+                );
+
+        var world = new World.Builder()
+                .totalLine(3)
+                .totalColumn(3)
+                .baseRabbitCount(0)
+                .baseFoxCount(3)
+                .coordGenerator(mockedCoordGenerator)
+                .build();
+
+        var territoryL0C0 = world.territoryAt(Coord.of(0,0));
+        var territoryL2C2 = world.territoryAt(Coord.of(2,2));
+
+        Assertions.assertThat(territoryL0C0.totalFox()).isEqualTo(2);
+        Assertions.assertThat(territoryL2C2.totalFox()).isEqualTo(1);
+    }
 }
