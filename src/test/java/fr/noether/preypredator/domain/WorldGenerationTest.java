@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class WorldGenerationTest {
     @Test
-    public void world_should_is_a_dimensioned_grid() {
+    public void world_should_be_a_dimensioned_grid() {
         assertWorldSize(10, 10, 100);
         assertWorldSize(15, 10, 150);
     }
