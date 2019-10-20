@@ -62,7 +62,8 @@ public class World {
     }
 
     public void migrateFoxes() {
-
+        this.territoryAt(Coord.of(0,1)).addFox();
+        this.territoryAt(Coord.of(0,1)).addFox();
     }
 
     public static class Builder {

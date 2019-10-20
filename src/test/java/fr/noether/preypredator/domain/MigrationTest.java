@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class MigrationTest {
 
-/*    @Test
+    @Test
     public void fox_should_move_from_one_territory_to_one_adjacent_territory() {
         CoordGenerator mockedCoordGenerator =
                 new MockCoordGenerator(
@@ -26,5 +26,5 @@ public class MigrationTest {
 
         Territory territoryL0C1 = world.territoryAt(Coord.of(0, 1));
         Assertions.assertThat(territoryL0C1.totalFox()).isEqualTo(2);
-    }*/
+    }
 }
