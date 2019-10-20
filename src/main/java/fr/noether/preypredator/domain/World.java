@@ -2,7 +2,9 @@ package fr.noether.preypredator.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 public class World {
     private final int totalLine;
@@ -13,7 +15,8 @@ public class World {
         this.totalLine = builder.totalLine;
         this.totalColumn = builder.totalColumn;
         this.territories = buildTerritories(builder.totalLine, builder.totalColumn);
-        populateWorld(builder);
+        populateWorldWith(builder.baseRabbitCount, builder.coordGenerator, this.addRabbit());
+        populateWorldWith(builder.baseFoxCount, builder.coordGenerator, this.addFox());
     }
 
     private static List<Territory> buildTerritories(int totalLine, int totalColumn) {
@@ -27,24 +30,22 @@ public class World {
         return territories;
     }
 
-    private void populateWorld(Builder builder) {
-        CoordGenerator coordGenerator = builder.coordGenerator;
-        setupRabbits(builder.baseRabbitCount, coordGenerator);
-        setupFoxes(builder.baseFoxCount, coordGenerator);
+    private void populateWorldWith(
+            int populationCount,
+            CoordGenerator coordGenerator,
+            Consumer<Coord> populateMethod
+    ) {
+        IntStream.range(0, populationCount)
+                .mapToObj(i -> coordGenerator.next())
+                .forEach(populateMethod);
     }
 
-    private void setupRabbits(int baseRabbitCount, CoordGenerator coordGenerator) {
-        for (int i = 0; i < baseRabbitCount; i++) {
-            Coord coord = coordGenerator.next();
-            territoryAt(coord).addRabbit();
-        }
+    private Consumer<Coord> addRabbit() {
+        return coord -> territoryAt(coord).addRabbit();
     }
 
-    private void setupFoxes(int baseFoxCount, CoordGenerator coordGenerator) {
-        for (int i = 0; i < baseFoxCount; i++) {
-            Coord coord = coordGenerator.next();
-            territoryAt(coord).addFox();
-        }
+    private Consumer<Coord> addFox() {
+        return coord -> territoryAt(coord).addFox();
     }
 
     public int size() {
@@ -58,6 +59,10 @@ public class World {
                 .filter(byWantedPosition)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public void migrateFoxes() {
+
     }
 
     public static class Builder {
