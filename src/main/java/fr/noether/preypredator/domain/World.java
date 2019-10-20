@@ -2,47 +2,53 @@ package fr.noether.preypredator.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class World {
-    private final int worldSize;
+    private final int totalLine;
+    private final int totalColumn;
     private final List<Territory> territories;
 
     private World(Builder builder) {
-        this.worldSize = builder.totalLine * builder.totalColumn;
+        this.totalLine = builder.totalLine;
+        this.totalColumn = builder.totalColumn;
         this.territories = buildTerritories(builder.totalLine, builder.totalColumn);
+        populateWorld(builder);
+    }
 
-        for (int i = 0; i < builder.baseRabbitCount; i++) {
-            Coord coord = builder.coordGenerator.next();
+    private static List<Territory> buildTerritories(int totalLine, int totalColumn) {
+        List<Territory> territories = new ArrayList<>();
+        for (int i = 0; i < totalLine; i++) {
+            for (int j = 0; j < totalColumn; j++) {
+                Coord position = Coord.of(i, j);
+                territories.add(Territory.at(position));
+            }
+        }
+        return territories;
+    }
+
+    private void populateWorld(Builder builder) {
+        CoordGenerator coordGenerator = builder.coordGenerator;
+        setupRabbits(builder.baseRabbitCount, coordGenerator);
+        setupFoxes(builder.baseFoxCount, coordGenerator);
+    }
+
+    private void setupRabbits(int baseRabbitCount, CoordGenerator coordGenerator) {
+        for (int i = 0; i < baseRabbitCount; i++) {
+            Coord coord = coordGenerator.next();
             territoryAt(coord).addRabbit();
         }
+    }
 
-        for (int i = 0; i < builder.baseFoxCount; i++) {
-            Coord coord = builder.coordGenerator.next();
+    private void setupFoxes(int baseFoxCount, CoordGenerator coordGenerator) {
+        for (int i = 0; i < baseFoxCount; i++) {
+            Coord coord = coordGenerator.next();
             territoryAt(coord).addFox();
         }
-
-
-    }
-
-    private static List<Territory>  buildTerritories(int totalLine, int totalColumn) {
-        return IntStream.range(0, totalLine)
-                .mapToObj(line -> lineTerritories(totalColumn, line))
-                .reduce(new ArrayList<>(), (l1, l2) -> { l1.addAll(l2); return l1; });
-    }
-
-    private static List<Territory> lineTerritories(int totalColumn, int line) {
-        return IntStream.range(0, totalColumn)
-                .mapToObj(column -> Coord.of(line, column))
-                .map(Territory::at)
-                .collect(Collectors.toList());
     }
 
     public int size() {
-        return this.worldSize;
+        return totalLine * totalColumn;
     }
 
     public Territory territoryAt(Coord position) {
