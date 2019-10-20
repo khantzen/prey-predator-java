@@ -31,4 +31,29 @@ public class MigrationTest {
         Assertions.assertThat(territoryL0C1.totalFox()).isEqualTo(2);
         Assertions.assertThat(territoryL0C0.totalFox()).isEqualTo(0);
     }
+
+    @Test
+    public void multiple_fox_should_move_from_their_territory_to_one_adjacent_territory() {
+        CoordGenerator mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(0, 0),
+                        Coord.of(2, 4),
+                        Coord.of(4, 4),
+                        Coord.of(3, 0)
+                );
+
+        RandomGenerator mockedRandomGenerator =
+                new MockRandomGenerator(0, 1, 2, 3);
+
+        World world = new World.Builder()
+                .totalLine(5)
+                .totalColumn(5)
+                .baseRabbitCount(0)
+                .baseFoxCount(4)
+                .coordGenerator(mockedCoordGenerator)
+                .randomGenerator()
+                .build();
+
+
+    }
 }
