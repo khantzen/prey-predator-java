@@ -29,5 +29,6 @@ public class WorldGenerationTest {
 
         var territory = world.findTerritoryAt(Coord.of(5, 5));
         Assertions.assertThat(territory).isNotNull();
+        Assertions.assertThat(territory.position()).isEqualTo(Coord.of(5, 5));
     }
 }
