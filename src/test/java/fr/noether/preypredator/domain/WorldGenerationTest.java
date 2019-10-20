@@ -57,6 +57,9 @@ public class WorldGenerationTest {
                 .build();
 
         var territoryL0C0 = world.territoryAt(Coord.of(0,0));
+        var territoryL2C2 = world.territoryAt(Coord.of(2,2));
+
         Assertions.assertThat(territoryL0C0.totalRabbit()).isEqualTo(2);
+        Assertions.assertThat(territoryL2C2.totalRabbit()).isEqualTo(1);
     }
 }

@@ -19,6 +19,12 @@ public class World {
                 territories.add(Territory.at(position));
             }
         }
+
+        for (int i = 0; i < builder.baseRabbitCount; i++) {
+            Coord coord = builder.coordGenerator.next();
+            territoryAt(coord).addRabbit();
+        }
+
     }
 
     public int size() {
