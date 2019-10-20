@@ -25,7 +25,7 @@ public class World {
         return this.worldSize;
     }
 
-    public Territory findTerritoryAt(Coord position) {
+    public Territory territoryAt(Coord position) {
         Predicate<Territory> byWantedPosition = t -> t.position().equals(position);
 
         return this.territories.stream()
@@ -37,6 +37,8 @@ public class World {
     public static class Builder {
         private int totalLine;
         private int totalColumn;
+        private int baseRabbitCount;
+        private CoordGenerator coordGenerator;
 
         public Builder totalLine(int totalLine) {
             this.totalLine = totalLine;
@@ -45,6 +47,16 @@ public class World {
 
         public Builder totalColumn(int totalColumn) {
             this.totalColumn = totalColumn;
+            return this;
+        }
+
+        public Builder baseRabbitCount(int baseRabbitCount) {
+            this.baseRabbitCount = baseRabbitCount;
+            return this;
+        }
+
+        public Builder coordGenerator(CoordGenerator coordGenerator) {
+            this.coordGenerator = coordGenerator;
             return this;
         }
 

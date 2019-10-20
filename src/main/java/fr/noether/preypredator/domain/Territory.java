@@ -14,4 +14,8 @@ public class Territory {
     public Coord position() {
         return coord;
     }
+
+    public int totalRabbit() {
+        return 1;
+    }
 }

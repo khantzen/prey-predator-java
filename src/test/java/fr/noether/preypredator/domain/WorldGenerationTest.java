@@ -1,8 +1,8 @@
 package fr.noether.preypredator.domain;
 
+import fr.noether.preypredator.util.MockCoordGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
-import org.junit.runners.Parameterized;
 
 public class WorldGenerationTest {
     @Test
@@ -21,22 +21,42 @@ public class WorldGenerationTest {
     }
 
     @Test
-    public void world_is_composed_of_territories() {
+    public void world_should_be_able_to_give_a_territory_according_to_its_position() {
         var world = new World.Builder()
                 .totalLine(10)
                 .totalColumn(10)
                 .build();
 
-        var territoryAtL5C5 = world.findTerritoryAt(Coord.of(5, 5));
-        var territoryAtL6C7 = world.findTerritoryAt(Coord.of(6, 7));
+        var territoryL5C5 = world.territoryAt(Coord.of(5, 5));
+        var territoryL6C7 = world.territoryAt(Coord.of(6, 7));
 
-        Assertions.assertThat(territoryAtL5C5).isNotNull();
+        Assertions.assertThat(territoryL5C5).isNotNull();
 
-        Assertions.assertThat(territoryAtL5C5.position())
+        Assertions.assertThat(territoryL5C5.position())
                 .isNotEqualTo(Coord.of(5, 8));
-        Assertions.assertThat(territoryAtL5C5.position())
+        Assertions.assertThat(territoryL5C5.position())
                 .isEqualTo(Coord.of(5, 5));
-        Assertions.assertThat(territoryAtL6C7.position())
+        Assertions.assertThat(territoryL6C7.position())
                 .isEqualTo(Coord.of(6, 7));
+    }
+
+    @Test
+    public void world_should_set_rabbits_following_the_coord_generator() {
+        CoordGenerator mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(0,0),
+                        Coord.of(2, 2),
+                        Coord.of(0, 0)
+                        );
+
+        var world = new World.Builder()
+                .totalLine(3)
+                .totalColumn(3)
+                .baseRabbitCount(3)
+                .coordGenerator(mockedCoordGenerator)
+                .build();
+
+        var territoryL0C0 = world.territoryAt(Coord.of(0,0));
+        Assertions.assertThat(territoryL0C0.totalRabbit()).isEqualTo(1);
     }
 }
