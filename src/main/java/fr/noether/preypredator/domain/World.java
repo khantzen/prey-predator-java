@@ -2,7 +2,10 @@ package fr.noether.preypredator.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class World {
     private final int worldSize;
@@ -10,15 +13,7 @@ public class World {
 
     private World(Builder builder) {
         this.worldSize = builder.totalLine * builder.totalColumn;
-
-        this.territories = new ArrayList<>();
-
-        for (int line = 0; line < builder.totalLine; line++) {
-            for (int column = 0; column < builder.totalColumn; column++) {
-                Coord position = Coord.of(line, column);
-                territories.add(Territory.at(position));
-            }
-        }
+        this.territories = buildTerritories(builder.totalLine, builder.totalColumn);
 
         for (int i = 0; i < builder.baseRabbitCount; i++) {
             Coord coord = builder.coordGenerator.next();
@@ -30,6 +25,20 @@ public class World {
             territoryAt(coord).addFox();
         }
 
+
+    }
+
+    private static List<Territory>  buildTerritories(int totalLine, int totalColumn) {
+        return IntStream.range(0, totalLine)
+                .mapToObj(line -> lineTerritories(totalColumn, line))
+                .reduce(new ArrayList<>(), (l1, l2) -> { l1.addAll(l2); return l1; });
+    }
+
+    private static List<Territory> lineTerritories(int totalColumn, int line) {
+        return IntStream.range(0, totalColumn)
+                .mapToObj(column -> Coord.of(line, column))
+                .map(Territory::at)
+                .collect(Collectors.toList());
     }
 
     public int size() {
