@@ -25,6 +25,9 @@ public class MigrationTest {
         world.migrateFoxes();
 
         Territory territoryL0C1 = world.territoryAt(Coord.of(0, 1));
+        Territory territoryL0C0 = world.territoryAt(Coord.of(0, 0));
+
         Assertions.assertThat(territoryL0C1.totalFox()).isEqualTo(2);
+        Assertions.assertThat(territoryL0C0.totalFox()).isEqualTo(0);
     }
 }

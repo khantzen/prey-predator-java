@@ -1,5 +1,7 @@
 package fr.noether.preypredator.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Coord {
@@ -27,5 +29,9 @@ public class Coord {
     @Override
     public int hashCode() {
         return Objects.hash(line, column);
+    }
+
+    public List<Coord> ajacents() {
+        return new ArrayList<>();
     }
 }

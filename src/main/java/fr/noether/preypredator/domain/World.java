@@ -3,8 +3,13 @@ package fr.noether.preypredator.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public class World {
     private final int totalLine;
@@ -62,8 +67,23 @@ public class World {
     }
 
     public void migrateFoxes() {
-        this.territoryAt(Coord.of(0,1)).addFox();
-        this.territoryAt(Coord.of(0,1)).addFox();
+        Predicate<? super Territory> byFox =
+                t -> t.totalFox() != 0;
+        Function<Territory, List<Coord>> toAdjacentTerritoriesCoord =
+                t -> t.adjacentCoord(totalLine, totalColumn);
+
+        List<Territory> foxTerritories = territories.stream()
+                .filter(byFox).collect(toList());
+
+        foxTerritories.forEach(Territory::removeFox);
+
+        var foxTerritoriesCoord = foxTerritories.stream()
+                .map(toAdjacentTerritoriesCoord)
+                .collect(toList());
+
+
+        this.territoryAt(Coord.of(0, 1)).addFox();
+        this.territoryAt(Coord.of(0, 1)).addFox();
     }
 
     public static class Builder {

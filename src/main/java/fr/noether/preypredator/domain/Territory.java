@@ -1,5 +1,7 @@
 package fr.noether.preypredator.domain;
 
+import java.util.List;
+
 public class Territory {
     private final Coord coord;
     private int rabbitCount;
@@ -29,7 +31,15 @@ public class Territory {
         foxCount += 1;
     }
 
+    public void removeFox() {
+        foxCount--;
+    }
+
     public int totalFox() {
         return foxCount;
+    }
+
+    public List<Coord> adjacentCoord(int totalLine, int totalColumn) {
+        return this.coord.ajacents();
     }
 }
