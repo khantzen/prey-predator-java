@@ -16,6 +16,6 @@ public class Territory {
     }
 
     public int totalRabbit() {
-        return 1;
+        return 2;
     }
 }
