@@ -8,6 +8,7 @@ public class WorldGenerationTest {
     @Test
     public void world_should_be_composed_of_a_dimensioned_grid_of_territories() {
         assertWorldSize(10, 10, 100);
+        assertWorldSize(15, 10, 150);
     }
 
     private void assertWorldSize(int line, int column, int expectedSize) {
