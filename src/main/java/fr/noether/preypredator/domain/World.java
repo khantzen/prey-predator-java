@@ -85,12 +85,16 @@ public class World {
 
         for(var territory : rabbitTerritories) {
             var adjacentPosition = territory.adjacentCoord(totalLine, totalColumn);
-            while (territory.totalRabbit() != 0) {
-                territory.removeRabbit();
-                var destination = rabbitMigration
-                        .nextCoord(adjacentPosition, territory.position(), territories);
-                territoryAt(destination).addRabbit();
-            }
+            migrateRabbitFrom(territory, adjacentPosition);
+        }
+    }
+
+    private void migrateRabbitFrom(Territory territory, List<Coord> adjacentPosition) {
+        while (territory.totalRabbit() != 0) {
+            territory.removeRabbit();
+            var destination = rabbitMigration
+                    .nextCoord(adjacentPosition, territory.position(), territories);
+            territoryAt(destination).addRabbit();
         }
     }
 
@@ -106,7 +110,7 @@ public class World {
     private void migrateFoxesFrom(Territory territory, List<Coord> adjacentCoords) {
         while (territory.totalFox() != 0) {
             territory.removeFox();
-            var destination = this.foxMigration
+            var destination = foxMigration
                     .nextCoord(adjacentCoords, territory.position(), territories);
 
             territoryAt(destination).addFoxToMigration();
