@@ -65,17 +65,21 @@ public class World {
     public void migrateFoxes() {
         Predicate<? super Territory> byFox = t -> t.totalFox() != 0;
         migrateSpecie(byFox, this::migrateFoxesFrom);
+        territories.forEach(Territory::endMigration);
     }
 
     public void migrateRabbits() {
         Predicate<? super Territory> byRabbit = t -> t.totalRabbit() != 0;
         migrateSpecie(byRabbit, this::migrateRabbitFrom);
+        territories.forEach(Territory::endMigration);
     }
 
-    private void migrateSpecie(Predicate<? super Territory> byFox, Consumer<Territory> migrationMethod) {
-        List<Territory> foxTerritories = filterTerritories(byFox);
-        foxTerritories.forEach(migrationMethod);
-        territories.forEach(Territory::endMigration);
+    private void migrateSpecie(
+            Predicate<? super Territory> bySpecie,
+            Consumer<Territory> migrateSpecieFrom
+    ) {
+        List<Territory> specieTerritories = filterTerritories(bySpecie);
+        specieTerritories.forEach(migrateSpecieFrom);
     }
 
     private void migrateFoxesFrom(Territory territory) {
