@@ -15,6 +15,7 @@ public class World {
     private final int totalColumn;
 
     private final Migration foxMigration;
+    private final Migration rabbitMigration;
 
     private final List<Territory> territories;
 
@@ -22,6 +23,7 @@ public class World {
         this.totalLine = builder.totalLine;
         this.totalColumn = builder.totalColumn;
         this.foxMigration = builder.foxMigration;
+        this.rabbitMigration = builder.rabbitMigration;
         this.territories = buildTerritories(builder.totalLine, builder.totalColumn);
         populateWorldWith(builder.baseRabbitCount, builder.coordGenerator, this.addRabbit());
         populateWorldWith(builder.baseFoxCount, builder.coordGenerator, this.addFox());
@@ -74,13 +76,22 @@ public class World {
         territories.forEach(Territory::endMigration);
     }
 
-    public void migrateRabbit() {
-        territoryAt(Coord.of(0,0)).removeRabbit();
-        territoryAt(Coord.of(0,1)).addRabbit();
-        //    Predicate<? super Territory> byRabbit = t -> t.totalRabbit() != 0;
-    //    List<Territory> rabbitTerritories = territories.stream()
-    //            .filter(byRabbit)
-    //            .collect(toList());
+    public void migrateRabbits() {
+        Predicate<? super Territory> byRabbit = t -> t.totalRabbit() != 0;
+
+        List<Territory> rabbitTerritories = territories.stream()
+                .filter(byRabbit)
+                .collect(toList());
+
+        for(var territory : rabbitTerritories) {
+            var adjacentPosition = territory.adjacentCoord(totalLine, totalColumn);
+            while (territory.totalRabbit() != 0) {
+                territory.removeRabbit();
+                var destination = rabbitMigration
+                        .nextCoord(adjacentPosition, territory.position(), territories);
+                territoryAt(destination).addRabbit();
+            }
+        }
     }
 
     public Territory territoryAt(Coord position) {
@@ -97,6 +108,7 @@ public class World {
             territory.removeFox();
             var destination = this.foxMigration
                     .nextCoord(adjacentCoords, territory.position(), territories);
+
             territoryAt(destination).addFoxToMigration();
         }
     }

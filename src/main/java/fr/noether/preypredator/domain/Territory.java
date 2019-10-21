@@ -54,6 +54,6 @@ public class Territory {
     }
 
     public void removeRabbit() {
-        this.rabbitCount = 0;
+        this.rabbitCount--;
     }
 }
