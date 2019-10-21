@@ -1,12 +1,10 @@
 package fr.noether.preypredator.domain;
 
 import fr.noether.preypredator.util.CoordGenerator;
-import fr.noether.preypredator.util.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
@@ -15,14 +13,15 @@ import static java.util.stream.Collectors.toList;
 public class World {
     private final int totalLine;
     private final int totalColumn;
-    private final RandomGenerator random;
+
+    private final Migration foxMigration;
 
     private final List<Territory> territories;
 
     private World(Builder builder) {
         this.totalLine = builder.totalLine;
         this.totalColumn = builder.totalColumn;
-        this.random = builder.randomGenerator;
+        this.foxMigration = builder.foxMigration;
         this.territories = buildTerritories(builder.totalLine, builder.totalColumn);
         populateWorldWith(builder.baseRabbitCount, builder.coordGenerator, this.addRabbit());
         populateWorldWith(builder.baseFoxCount, builder.coordGenerator, this.addFox());
@@ -87,7 +86,8 @@ public class World {
     private void migrateFoxesFrom(Territory territory, List<Coord> adjacentCoords) {
         while (territory.totalFox() != 0) {
             territory.removeFox();
-            var destination = this.random.from(adjacentCoords);
+            var destination = this.foxMigration
+                    .nextCoord(adjacentCoords, territory.position(), territories);
             territoryAt(destination).addFoxToMigration();
         }
     }
@@ -98,7 +98,7 @@ public class World {
         private int baseRabbitCount;
         private int baseFoxCount;
         private CoordGenerator coordGenerator;
-        private RandomGenerator randomGenerator;
+        private Migration foxMigration;
 
         public Builder totalLine(int totalLine) {
             this.totalLine = totalLine;
@@ -125,8 +125,8 @@ public class World {
             return this;
         }
 
-        public Builder randomGenerator(RandomGenerator randomGenerator) {
-            this.randomGenerator = randomGenerator;
+        public Builder foxMigration(Migration foxMigration) {
+            this.foxMigration = foxMigration;
             return this;
         }
 
