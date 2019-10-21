@@ -114,6 +114,12 @@ public class World {
                 .collect(toList());
     }
 
+    public void lifeHappen() {
+        this.migrateFoxes();
+        this.migrateRabbits();
+        this.territoryAt(Coord.of(0,1)).removeRabbit();
+    }
+
     public static class Builder {
         private int totalLine;
         private int totalColumn;
