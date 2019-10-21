@@ -65,17 +65,12 @@ public class World {
     public void migrateFoxes() {
         Predicate<? super Territory> byFox = t -> t.totalFox() != 0;
         List<Territory> foxTerritories = filterTerritories(byFox);
-
-
-        for (var territory : foxTerritories) {
-            var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
-            migrateFoxesFrom(territory, adjacentCoords);
-        }
-
+        foxTerritories.forEach(this::migrateFoxesFrom);
         territories.forEach(Territory::endMigration);
     }
 
-    private void migrateFoxesFrom(Territory territory, List<Coord> adjacentCoords) {
+    private void migrateFoxesFrom(Territory territory) {
+        var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
         while (territory.totalFox() != 0) {
             territory.removeFox();
             var destination = foxMigration
