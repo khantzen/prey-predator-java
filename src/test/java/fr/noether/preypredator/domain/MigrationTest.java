@@ -97,4 +97,34 @@ public class MigrationTest {
         var territoryL3C3 = world.territoryAt(Coord.of(3, 3));
         Assertions.assertThat(territoryL3C3.totalFox()).isEqualTo(0);
     }
+
+    @Test
+    public void fox_should_migrate_only_once() {
+        var mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(0, 0),
+                        Coord.of(0, 0),
+                        Coord.of(0, 1)
+                );
+
+        var mockedRandomGenerator = new MockRandomGenerator(0, 0, 0, 0, 0);
+
+        World world = new World.Builder()
+                .totalLine(1)
+                .totalColumn(2)
+                .baseRabbitCount(0)
+                .baseFoxCount(3)
+                .coordGenerator(mockedCoordGenerator)
+                .randomGenerator(mockedRandomGenerator)
+                .build();
+
+        world.migrateFoxes();
+
+        var territoryL0C0 = world.territoryAt(Coord.of(0,0));
+        var territoryL0C1 = world.territoryAt(Coord.of(0,1));
+
+        Assertions.assertThat(territoryL0C0.totalFox()).isEqualTo(1);
+        Assertions.assertThat(territoryL0C1.totalFox()).isEqualTo(2);
+    }
+
 }
