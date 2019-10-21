@@ -75,6 +75,7 @@ public class World {
     }
 
     public void migrateRabbit() {
+        territoryAt(Coord.of(0,0)).removeRabbit();
         territoryAt(Coord.of(0,1)).addRabbit();
         //    Predicate<? super Territory> byRabbit = t -> t.totalRabbit() != 0;
     //    List<Territory> rabbitTerritories = territories.stream()

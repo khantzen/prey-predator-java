@@ -52,4 +52,8 @@ public class Territory {
         foxCount = migratingFox;
         migratingFox = 0;
     }
+
+    public void removeRabbit() {
+        this.rabbitCount = 0;
+    }
 }

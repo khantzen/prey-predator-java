@@ -35,5 +35,6 @@ public class RabbitMigrationTest {
         Territory territoryL0C0 = world.territoryAt(Coord.of(0, 0));
 
         Assertions.assertThat(territoryL0C1.totalRabbit()).isEqualTo(1);
+        Assertions.assertThat(territoryL0C0.totalRabbit()).isEqualTo(0);
     }
 }
