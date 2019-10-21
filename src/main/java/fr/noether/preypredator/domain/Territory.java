@@ -53,10 +53,13 @@ public class Territory {
         this.migratingRabbit++;
     }
 
-    public void endMigration() {
+    public void endFoxMigration() {
         foxCount = migratingFox;
-        rabbitCount = migratingRabbit;
         migratingFox = 0;
+    }
+
+    public void endRabbitMigration() {
+        rabbitCount = migratingRabbit;
         migratingRabbit = 0;
     }
 

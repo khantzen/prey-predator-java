@@ -65,13 +65,13 @@ public class World {
     public void migrateFoxes() {
         Predicate<? super Territory> byFox = t -> t.totalFox() != 0;
         migrateSpecie(byFox, this::migrateFoxesFrom);
-        territories.forEach(Territory::endMigration);
+        territories.forEach(Territory::endFoxMigration);
     }
 
     public void migrateRabbits() {
         Predicate<? super Territory> byRabbit = t -> t.totalRabbit() != 0;
         migrateSpecie(byRabbit, this::migrateRabbitFrom);
-        territories.forEach(Territory::endMigration);
+        territories.forEach(Territory::endRabbitMigration);
     }
 
     private void migrateSpecie(
@@ -84,10 +84,9 @@ public class World {
 
     private void migrateFoxesFrom(Territory territory) {
         var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
-        Migration migration = this.foxMigration;
         while (territory.totalFox() != 0) {
             territory.removeFox();
-            var destination = migration
+            var destination = this.foxMigration
                     .nextCoord(adjacentCoords, territory.position(), territories);
             territoryAt(destination).addFoxToMigration();
         }
@@ -95,10 +94,9 @@ public class World {
 
     private void migrateRabbitFrom(Territory territory) {
         var adjacentPosition = territory.adjacentCoord(totalLine, totalColumn);
-        Migration migration = this.rabbitMigration;
         while (territory.totalRabbit() != 0) {
             territory.removeRabbit();
-            var destination = migration
+            var destination = this.rabbitMigration
                     .nextCoord(adjacentPosition, territory.position(), territories);
             territoryAt(destination).addRabbitMigration();
         }
