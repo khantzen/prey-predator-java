@@ -83,13 +83,14 @@ public class World {
             var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
             migrateFoxesFrom(territory, adjacentCoords);
         }
+        territories.forEach(t -> t.endMigration());
     }
 
     private void migrateFoxesFrom(Territory territory, List<Coord> adjacentCoords) {
         while (territory.totalFox() != 0) {
             territory.removeFox();
             var destination = this.random.from(adjacentCoords);
-            territoryAt(destination).addFox();
+            territoryAt(destination).addFoxToMigration();
         }
     }
 

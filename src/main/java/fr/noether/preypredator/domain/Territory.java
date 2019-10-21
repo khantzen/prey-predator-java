@@ -6,6 +6,7 @@ public class Territory {
     private final Coord coord;
     private int rabbitCount;
     private int foxCount;
+    private int migratingFox;
 
     private Territory(Coord coord) {
         this.coord = coord;
@@ -41,5 +42,14 @@ public class Territory {
 
     public List<Coord> adjacentCoord(int totalLine, int totalColumn) {
         return this.coord.adjacent(totalLine, totalColumn);
+    }
+
+    public void addFoxToMigration() {
+        migratingFox++;
+    }
+
+    public void endMigration() {
+        foxCount = migratingFox;
+        migratingFox = 0;
     }
 }
