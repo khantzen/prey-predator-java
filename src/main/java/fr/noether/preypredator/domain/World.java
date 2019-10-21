@@ -69,9 +69,7 @@ public class World {
 
     public void migrateRabbits() {
         Predicate<? super Territory> byRabbit = t -> t.totalRabbit() != 0;
-        List<Territory> rabbitTerritories = filterTerritories(byRabbit);
-        rabbitTerritories.forEach(this::migrateRabbitFrom);
-        territories.forEach(Territory::endMigration);
+        migrateSpecie(byRabbit, this::migrateRabbitFrom);
     }
 
     private void migrateSpecie(Predicate<? super Territory> byFox, Consumer<Territory> migrationMethod) {
@@ -82,9 +80,10 @@ public class World {
 
     private void migrateFoxesFrom(Territory territory) {
         var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
+        Migration migration = this.foxMigration;
         while (territory.totalFox() != 0) {
             territory.removeFox();
-            var destination = foxMigration
+            var destination = migration
                     .nextCoord(adjacentCoords, territory.position(), territories);
             territoryAt(destination).addFoxToMigration();
         }
@@ -92,9 +91,10 @@ public class World {
 
     private void migrateRabbitFrom(Territory territory) {
         var adjacentPosition = territory.adjacentCoord(totalLine, totalColumn);
+        Migration migration = this.rabbitMigration;
         while (territory.totalRabbit() != 0) {
             territory.removeRabbit();
-            var destination = rabbitMigration
+            var destination = migration
                     .nextCoord(adjacentPosition, territory.position(), territories);
             territoryAt(destination).addRabbitMigration();
         }
