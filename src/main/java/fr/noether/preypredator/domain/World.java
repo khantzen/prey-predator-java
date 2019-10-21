@@ -76,10 +76,10 @@ public class World {
 
     private void migrateSpecie(
             Predicate<? super Territory> bySpecie,
-            Consumer<Territory> migrateSpecieFrom
+            Consumer<Territory> migrateSpeciesFrom
     ) {
-        List<Territory> specieTerritories = filterTerritories(bySpecie);
-        specieTerritories.forEach(migrateSpecieFrom);
+        filterTerritories(bySpecie)
+                .forEach(migrateSpeciesFrom);
     }
 
     private void migrateFoxesFrom(Territory territory) {
