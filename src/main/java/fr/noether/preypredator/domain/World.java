@@ -87,6 +87,7 @@ public class World {
             var adjacentPosition = territory.adjacentCoord(totalLine, totalColumn);
             migrateRabbitFrom(territory, adjacentPosition);
         }
+        territories.forEach(Territory::endMigration);
     }
 
     private void migrateRabbitFrom(Territory territory, List<Coord> adjacentPosition) {
@@ -94,7 +95,7 @@ public class World {
             territory.removeRabbit();
             var destination = rabbitMigration
                     .nextCoord(adjacentPosition, territory.position(), territories);
-            territoryAt(destination).addRabbit();
+            territoryAt(destination).addRabbitMigration();
         }
     }
 
@@ -112,7 +113,6 @@ public class World {
             territory.removeFox();
             var destination = foxMigration
                     .nextCoord(adjacentCoords, territory.position(), territories);
-
             territoryAt(destination).addFoxToMigration();
         }
     }

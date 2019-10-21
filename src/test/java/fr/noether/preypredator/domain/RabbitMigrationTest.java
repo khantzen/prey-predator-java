@@ -70,4 +70,34 @@ public class RabbitMigrationTest {
         Assertions.assertThat(territoryL2C4.totalRabbit()).isEqualTo(0);
         Assertions.assertThat(territoryL2C3.totalRabbit()).isEqualTo(1);
     }
+
+    @Test
+    public void rabbit_should_migrate_only_once() {
+        var mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(0, 0),
+                        Coord.of(0, 0),
+                        Coord.of(0, 1)
+                );
+
+        var mockedRandomGenerator = new MockRandomGenerator(0, 0, 0, 0, 0);
+
+        World world = new World.Builder()
+                .totalLine(1)
+                .totalColumn(2)
+                .baseRabbitCount(3)
+                .baseFoxCount(0)
+                .coordGenerator(mockedCoordGenerator)
+                .foxMigration(new SpecieMigration(mockedRandomGenerator))
+                .rabbitMigration(new SpecieMigration(mockedRandomGenerator))
+                .build();
+
+        world.migrateRabbits();
+
+        var territoryL0C0 = world.territoryAt(Coord.of(0,0));
+        var territoryL0C1 = world.territoryAt(Coord.of(0,1));
+
+        Assertions.assertThat(territoryL0C0.totalRabbit()).isEqualTo(1);
+        Assertions.assertThat(territoryL0C1.totalRabbit()).isEqualTo(2);
+    }
 }

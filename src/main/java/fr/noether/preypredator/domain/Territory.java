@@ -7,6 +7,7 @@ public class Territory {
     private int rabbitCount;
     private int foxCount;
     private int migratingFox;
+    private int migratingRabbit;
 
     private Territory(Coord coord) {
         this.coord = coord;
@@ -48,9 +49,15 @@ public class Territory {
         migratingFox++;
     }
 
+    public void addRabbitMigration() {
+        this.migratingRabbit++;
+    }
+
     public void endMigration() {
         foxCount = migratingFox;
+        rabbitCount = migratingRabbit;
         migratingFox = 0;
+        migratingRabbit = 0;
     }
 
     public void removeRabbit() {
