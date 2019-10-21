@@ -104,19 +104,16 @@ public class World {
         }
     }
 
+    public Territory territoryAt(Coord position) {
+        Predicate<Territory> byWantedPosition = t -> t.position().equals(position);
+        var territoriesAtPosition = filterTerritories(byWantedPosition);
+        return territoriesAtPosition.get(0);
+    }
+
     private List<Territory> filterTerritories(Predicate<? super Territory> byPredicate) {
         return territories.stream()
                 .filter(byPredicate)
                 .collect(toList());
-    }
-
-    public Territory territoryAt(Coord position) {
-        Predicate<Territory> byWantedPosition = t -> t.position().equals(position);
-
-        return this.territories.stream()
-                .filter(byWantedPosition)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
     }
 
     public static class Builder {
