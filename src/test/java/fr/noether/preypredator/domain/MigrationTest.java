@@ -62,7 +62,39 @@ public class MigrationTest {
 
         world.migrateFoxes();
         var territoryL1C0 = world.territoryAt(Coord.of(1, 0));
+        var territoryL2C4 = world.territoryAt(Coord.of(2, 4));
+        var territoryL2C3 = world.territoryAt(Coord.of(2, 3));
 
         Assertions.assertThat(territoryL1C0.totalFox()).isEqualTo(1);
+        Assertions.assertThat(territoryL2C4.totalFox()).isEqualTo(0);
+        Assertions.assertThat(territoryL2C3.totalFox()).isEqualTo(1);
+    }
+
+    @Test
+    public void after_migration_no_fox_should_left_in_territory() {
+        var mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(3, 3),
+                        Coord.of(3, 3),
+                        Coord.of(3, 3),
+                        Coord.of(3, 3),
+                        Coord.of(3, 3)
+                );
+
+        var mockedRandomGenerator = new MockRandomGenerator(0, 0, 0, 0, 0);
+
+        World world = new World.Builder()
+                .totalLine(5)
+                .totalColumn(5)
+                .baseRabbitCount(0)
+                .baseFoxCount(5)
+                .coordGenerator(mockedCoordGenerator)
+                .randomGenerator(mockedRandomGenerator)
+                .build();
+
+        world.migrateFoxes();
+
+        var territoryL3C3 = world.territoryAt(Coord.of(3, 3));
+        Assertions.assertThat(territoryL3C3.totalFox()).isEqualTo(0);
     }
 }

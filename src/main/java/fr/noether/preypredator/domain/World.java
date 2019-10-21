@@ -80,8 +80,14 @@ public class World {
                 .filter(byFox).collect(toList());
 
         for (var territory : foxTerritories) {
-            territory.removeFox();
             var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
+            migrateFoxesFrom(territory, adjacentCoords);
+        }
+    }
+
+    private void migrateFoxesFrom(Territory territory, List<Coord> adjacentCoords) {
+        while (territory.totalFox() != 0) {
+            territory.removeFox();
             var destination = this.random.from(adjacentCoords);
             territoryAt(destination).addFox();
         }
