@@ -61,6 +61,20 @@ public class World {
         return totalLine * totalColumn;
     }
 
+    public void migrateFoxes() {
+        Predicate<? super Territory> byFox = t -> t.totalFox() != 0;
+        List<Territory> foxTerritories = territories.stream()
+                .filter(byFox)
+                .collect(toList());
+
+        for (var territory : foxTerritories) {
+            var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
+            migrateFoxesFrom(territory, adjacentCoords);
+        }
+
+        territories.forEach(Territory::endMigration);
+    }
+
     public Territory territoryAt(Coord position) {
         Predicate<Territory> byWantedPosition = t -> t.position().equals(position);
 
@@ -68,22 +82,6 @@ public class World {
                 .filter(byWantedPosition)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
-    }
-
-    public void migrateFoxes() {
-        Predicate<? super Territory> byFox =
-                t -> t.totalFox() != 0;
-        Function<Territory, List<Coord>> toAdjacentTerritoriesCoord =
-                t -> t.adjacentCoord(totalLine, totalColumn);
-
-        List<Territory> foxTerritories = territories.stream()
-                .filter(byFox).collect(toList());
-
-        for (var territory : foxTerritories) {
-            var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
-            migrateFoxesFrom(territory, adjacentCoords);
-        }
-        territories.forEach(t -> t.endMigration());
     }
 
     private void migrateFoxesFrom(Territory territory, List<Coord> adjacentCoords) {
