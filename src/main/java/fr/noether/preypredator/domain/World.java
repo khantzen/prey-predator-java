@@ -64,9 +64,8 @@ public class World {
 
     public void migrateFoxes() {
         Predicate<? super Territory> byFox = t -> t.totalFox() != 0;
-        List<Territory> foxTerritories = territories.stream()
-                .filter(byFox)
-                .collect(toList());
+        List<Territory> foxTerritories = filterTerritories(byFox);
+
 
         for (var territory : foxTerritories) {
             var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
@@ -76,12 +75,18 @@ public class World {
         territories.forEach(Territory::endMigration);
     }
 
+    private void migrateFoxesFrom(Territory territory, List<Coord> adjacentCoords) {
+        while (territory.totalFox() != 0) {
+            territory.removeFox();
+            var destination = foxMigration
+                    .nextCoord(adjacentCoords, territory.position(), territories);
+            territoryAt(destination).addFoxToMigration();
+        }
+    }
+
     public void migrateRabbits() {
         Predicate<? super Territory> byRabbit = t -> t.totalRabbit() != 0;
-
-        List<Territory> rabbitTerritories = territories.stream()
-                .filter(byRabbit)
-                .collect(toList());
+        List<Territory> rabbitTerritories = filterTerritories(byRabbit);
 
         for(var territory : rabbitTerritories) {
             var adjacentPosition = territory.adjacentCoord(totalLine, totalColumn);
@@ -99,6 +104,12 @@ public class World {
         }
     }
 
+    private List<Territory> filterTerritories(Predicate<? super Territory> byPredicate) {
+        return territories.stream()
+                .filter(byPredicate)
+                .collect(toList());
+    }
+
     public Territory territoryAt(Coord position) {
         Predicate<Territory> byWantedPosition = t -> t.position().equals(position);
 
@@ -106,15 +117,6 @@ public class World {
                 .filter(byWantedPosition)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
-    }
-
-    private void migrateFoxesFrom(Territory territory, List<Coord> adjacentCoords) {
-        while (territory.totalFox() != 0) {
-            territory.removeFox();
-            var destination = foxMigration
-                    .nextCoord(adjacentCoords, territory.position(), territories);
-            territoryAt(destination).addFoxToMigration();
-        }
     }
 
     public static class Builder {
