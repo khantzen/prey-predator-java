@@ -84,13 +84,13 @@ public class World {
         List<Territory> rabbitTerritories = filterTerritories(byRabbit);
 
         for(var territory : rabbitTerritories) {
-            var adjacentPosition = territory.adjacentCoord(totalLine, totalColumn);
-            migrateRabbitFrom(territory, adjacentPosition);
+            migrateRabbitFrom(territory);
         }
         territories.forEach(Territory::endMigration);
     }
 
-    private void migrateRabbitFrom(Territory territory, List<Coord> adjacentPosition) {
+    private void migrateRabbitFrom(Territory territory) {
+        var adjacentPosition = territory.adjacentCoord(totalLine, totalColumn);
         while (territory.totalRabbit() != 0) {
             territory.removeRabbit();
             var destination = rabbitMigration
