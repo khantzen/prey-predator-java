@@ -74,6 +74,14 @@ public class World {
         territories.forEach(Territory::endMigration);
     }
 
+    public void migrateRabbit() {
+        territoryAt(Coord.of(0,1)).addRabbit();
+        //    Predicate<? super Territory> byRabbit = t -> t.totalRabbit() != 0;
+    //    List<Territory> rabbitTerritories = territories.stream()
+    //            .filter(byRabbit)
+    //            .collect(toList());
+    }
+
     public Territory territoryAt(Coord position) {
         Predicate<Territory> byWantedPosition = t -> t.position().equals(position);
 
@@ -99,6 +107,7 @@ public class World {
         private int baseFoxCount;
         private CoordGenerator coordGenerator;
         private Migration foxMigration;
+        private Migration rabbitMigration;
 
         public Builder totalLine(int totalLine) {
             this.totalLine = totalLine;
@@ -127,6 +136,11 @@ public class World {
 
         public Builder foxMigration(Migration foxMigration) {
             this.foxMigration = foxMigration;
+            return this;
+        }
+
+        public Builder rabbitMigration(Migration rabbitMigration) {
+            this.rabbitMigration = rabbitMigration;
             return this;
         }
 

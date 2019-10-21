@@ -4,10 +4,10 @@ import fr.noether.preypredator.util.RandomGenerator;
 
 import java.util.List;
 
-public class FoxMigration implements Migration {
+public class SpecieMigration implements Migration {
     private final RandomGenerator randomGenerator;
 
-    public FoxMigration(RandomGenerator randomGenerator) {
+    public SpecieMigration(RandomGenerator randomGenerator) {
         this.randomGenerator = randomGenerator;
     }
 

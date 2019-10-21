@@ -26,7 +26,7 @@ public class FoxMigrationTest {
                 .baseRabbitCount(0)
                 .baseFoxCount(2)
                 .coordGenerator(mockedCoordGenerator)
-                .foxMigration(new FoxMigration(mockedRandomGenerator))
+                .foxMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
         world.migrateFoxes();
@@ -57,7 +57,7 @@ public class FoxMigrationTest {
                 .baseRabbitCount(0)
                 .baseFoxCount(4)
                 .coordGenerator(mockedCoordGenerator)
-                .foxMigration(new FoxMigration(mockedRandomGenerator))
+                .foxMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
         world.migrateFoxes();
@@ -89,7 +89,7 @@ public class FoxMigrationTest {
                 .baseRabbitCount(0)
                 .baseFoxCount(5)
                 .coordGenerator(mockedCoordGenerator)
-                .foxMigration(new FoxMigration(mockedRandomGenerator))
+                .foxMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
         world.migrateFoxes();
@@ -115,7 +115,7 @@ public class FoxMigrationTest {
                 .baseRabbitCount(0)
                 .baseFoxCount(3)
                 .coordGenerator(mockedCoordGenerator)
-                .foxMigration(new FoxMigration(mockedRandomGenerator))
+                .foxMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
         world.migrateFoxes();
