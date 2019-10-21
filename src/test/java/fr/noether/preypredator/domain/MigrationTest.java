@@ -2,6 +2,8 @@ package fr.noether.preypredator.domain;
 
 import fr.noether.preypredator.util.CoordGenerator;
 import fr.noether.preypredator.util.MockCoordGenerator;
+import fr.noether.preypredator.util.MockRandomGenerator;
+import fr.noether.preypredator.util.RandomGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
@@ -15,12 +17,16 @@ public class MigrationTest {
                         Coord.of(0, 2)
                 );
 
+        RandomGenerator mockedRandomGenerator =
+                new MockRandomGenerator(0, 0);
+
         World world = new World.Builder()
                 .totalLine(1)
                 .totalColumn(3)
                 .baseRabbitCount(0)
                 .baseFoxCount(2)
                 .coordGenerator(mockedCoordGenerator)
+                .randomGenerator(mockedRandomGenerator)
                 .build();
 
         world.migrateFoxes();
@@ -38,8 +44,8 @@ public class MigrationTest {
                 new MockCoordGenerator(
                         Coord.of(0, 0),
                         Coord.of(2, 4),
-                        Coord.of(4, 4),
-                        Coord.of(3, 0)
+                        Coord.of(2, 2),
+                        Coord.of(3, 3)
                 );
 
         RandomGenerator mockedRandomGenerator =
@@ -51,9 +57,12 @@ public class MigrationTest {
                 .baseRabbitCount(0)
                 .baseFoxCount(4)
                 .coordGenerator(mockedCoordGenerator)
-                .randomGenerator()
+                .randomGenerator(mockedRandomGenerator)
                 .build();
 
+        world.migrateFoxes();
+        var territoryL1C0 = world.territoryAt(Coord.of(1, 0));
 
+        Assertions.assertThat(territoryL1C0.totalFox()).isEqualTo(1);
     }
 }

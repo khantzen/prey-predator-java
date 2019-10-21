@@ -1,6 +1,7 @@
 package fr.noether.preypredator.domain;
 
 import fr.noether.preypredator.util.CoordGenerator;
+import fr.noether.preypredator.util.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,14 @@ import static java.util.stream.Collectors.toList;
 public class World {
     private final int totalLine;
     private final int totalColumn;
+    private final RandomGenerator random;
+
     private final List<Territory> territories;
 
     private World(Builder builder) {
         this.totalLine = builder.totalLine;
         this.totalColumn = builder.totalColumn;
+        this.random = builder.randomGenerator;
         this.territories = buildTerritories(builder.totalLine, builder.totalColumn);
         populateWorldWith(builder.baseRabbitCount, builder.coordGenerator, this.addRabbit());
         populateWorldWith(builder.baseFoxCount, builder.coordGenerator, this.addFox());
@@ -75,23 +79,21 @@ public class World {
         List<Territory> foxTerritories = territories.stream()
                 .filter(byFox).collect(toList());
 
-        foxTerritories.forEach(Territory::removeFox);
-
-        var foxTerritoriesCoord = foxTerritories.stream()
-                .map(toAdjacentTerritoriesCoord)
-                .collect(toList());
-
-
-        this.territoryAt(Coord.of(0, 1)).addFox();
-        this.territoryAt(Coord.of(0, 1)).addFox();
+        for (var territory : foxTerritories) {
+            territory.removeFox();
+            var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
+            var destination = this.random.from(adjacentCoords);
+            territoryAt(destination).addFox();
+        }
     }
 
     public static class Builder {
         private int totalLine;
         private int totalColumn;
         private int baseRabbitCount;
-        private CoordGenerator coordGenerator;
         private int baseFoxCount;
+        private CoordGenerator coordGenerator;
+        private RandomGenerator randomGenerator;
 
         public Builder totalLine(int totalLine) {
             this.totalLine = totalLine;
@@ -115,6 +117,11 @@ public class World {
 
         public Builder coordGenerator(CoordGenerator coordGenerator) {
             this.coordGenerator = coordGenerator;
+            return this;
+        }
+
+        public Builder randomGenerator(RandomGenerator randomGenerator) {
+            this.randomGenerator = randomGenerator;
             return this;
         }
 

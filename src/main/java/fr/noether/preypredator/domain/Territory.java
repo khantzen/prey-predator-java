@@ -40,6 +40,6 @@ public class Territory {
     }
 
     public List<Coord> adjacentCoord(int totalLine, int totalColumn) {
-        return this.coord.ajacents();
+        return this.coord.adjacent(totalLine, totalColumn);
     }
 }
