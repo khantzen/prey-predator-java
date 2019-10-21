@@ -7,7 +7,7 @@ import fr.noether.preypredator.util.RandomGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-public class MigrationTest {
+public class FoxMigrationTest {
 
     @Test
     public void fox_should_move_from_one_territory_to_one_adjacent_territory() {
