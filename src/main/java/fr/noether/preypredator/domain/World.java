@@ -68,10 +68,7 @@ public class World {
 
         Predicate<? super Territory> occupied = t -> t.isOccupied();
         var occupiedTerritories = this.filterTerritories(occupied);
-
-        for (var territory : occupiedTerritories) {
-            territory.startHunt();
-        }
+        occupiedTerritories.forEach(Territory::startHunt);
     }
 
     public void migrateFoxes() {
