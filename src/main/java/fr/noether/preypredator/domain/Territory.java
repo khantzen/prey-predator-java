@@ -66,4 +66,8 @@ public class Territory {
     public void removeRabbit() {
         this.rabbitCount--;
     }
+
+    public boolean isOccupied() {
+        return this.rabbitCount != 0 || this.totalFox() != 0;
+    }
 }

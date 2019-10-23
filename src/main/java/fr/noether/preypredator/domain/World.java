@@ -66,9 +66,13 @@ public class World {
         this.migrateFoxes();
         this.migrateRabbits();
 
-        Territory territory = this.territoryAt(Coord.of(0, 1));
-        for (int i = 0; i < territory.totalFox(); i++) {
-            territory.removeRabbit();
+        Predicate<? super Territory> occupied = t -> t.isOccupied();
+        var occupiedTerritories = this.filterTerritories(occupied);
+
+        for (var territory : occupiedTerritories) {
+            for (int i = 0; i < territory.totalFox(); i++) {
+                territory.removeRabbit();
+            }
         }
     }
 
