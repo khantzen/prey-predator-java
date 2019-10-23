@@ -15,7 +15,7 @@ public class HuntTest {
                         Coord.of(0, 2)
                 );
 
-        Migration migration = new SpecieMigration(new MockRandomGenerator(0,0));
+        Migration migration = new SpecieMigration(new MockRandomGenerator(0, 0));
         var world = new World.Builder()
                 .baseFoxCount(1)
                 .baseRabbitCount(1)
@@ -32,5 +32,35 @@ public class HuntTest {
         var territoryL0C1 = world.territoryAt(Coord.of(0, 1));
         Assertions.assertThat(territoryL0C1.totalRabbit()).isEqualTo(0);
         Assertions.assertThat(territoryL0C1.totalFox()).isEqualTo(1);
+    }
+
+    @Test
+    public void one_hungry_fox_should_eat_only_one_rabbit() {
+        var mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(0, 0),
+                        Coord.of(0, 0),
+                        Coord.of(0, 0),
+                        Coord.of(0, 2),
+                        Coord.of(0, 2)
+                );
+
+        Migration migration = new SpecieMigration(new MockRandomGenerator(0, 0, 0, 0, 0, 0));
+        var world = new World.Builder()
+                .baseFoxCount(2)
+                .baseRabbitCount(3)
+                .totalLine(1)
+                .totalColumn(3)
+                .coordGenerator(mockedCoordGenerator)
+                .foxMigration(migration)
+                .rabbitMigration(migration)
+                .coordGenerator(mockedCoordGenerator)
+                .build();
+
+        world.lifeHappen();
+
+        var territoryL0C1 = world.territoryAt(Coord.of(0, 1));
+        Assertions.assertThat(territoryL0C1.totalRabbit()).isEqualTo(1);
+        Assertions.assertThat(territoryL0C1.totalFox()).isEqualTo(2);
     }
 }

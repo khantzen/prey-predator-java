@@ -62,6 +62,16 @@ public class World {
         return totalLine * totalColumn;
     }
 
+    public void lifeHappen() {
+        this.migrateFoxes();
+        this.migrateRabbits();
+
+        Territory territory = this.territoryAt(Coord.of(0, 1));
+        for (int i = 0; i < territory.totalFox(); i++) {
+            territory.removeRabbit();
+        }
+    }
+
     public void migrateFoxes() {
         Predicate<? super Territory> byFox = t -> t.totalFox() != 0;
         migrateSpecie(byFox, this::migrateFoxesFrom);
@@ -112,12 +122,6 @@ public class World {
         return territories.stream()
                 .filter(byPredicate)
                 .collect(toList());
-    }
-
-    public void lifeHappen() {
-        this.migrateFoxes();
-        this.migrateRabbits();
-        this.territoryAt(Coord.of(0,1)).removeRabbit();
     }
 
     public static class Builder {
