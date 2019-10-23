@@ -78,9 +78,9 @@ public class Territory {
     }
 
     public void startReproduction() {
-        if (rabbitCount == 2)
-            this.rabbitCount++;
-        else
-            this.rabbitCount += 2;
+        if (foxCount == 0) {
+            int rabbitCouple = rabbitCount / 2;
+            this.rabbitCount += rabbitCouple;
+        }
     }
 }
