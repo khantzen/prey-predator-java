@@ -64,7 +64,7 @@ public class Territory {
     }
 
     public void removeRabbit() {
-        this.rabbitCount--;
+        this.rabbitCount = Math.max(this.rabbitCount - 1, 0);
     }
 
     public boolean isOccupied() {
