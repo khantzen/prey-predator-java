@@ -70,9 +70,7 @@ public class World {
         var occupiedTerritories = this.filterTerritories(occupied);
 
         for (var territory : occupiedTerritories) {
-            for (int i = 0; i < territory.totalFox(); i++) {
-                territory.removeRabbit();
-            }
+            territory.startHunt();
         }
     }
 

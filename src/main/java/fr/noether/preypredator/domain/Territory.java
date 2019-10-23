@@ -70,4 +70,10 @@ public class Territory {
     public boolean isOccupied() {
         return this.rabbitCount != 0 || this.totalFox() != 0;
     }
+
+    void startHunt() {
+        for (int i = 0; i < totalFox(); i++) {
+            removeRabbit();
+        }
+    }
 }
