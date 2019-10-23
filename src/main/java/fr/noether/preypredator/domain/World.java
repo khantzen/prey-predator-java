@@ -63,9 +63,12 @@ public class World {
     }
 
     public void lifeHappen() {
-        this.migrateFoxes();
-        this.migrateRabbits();
+        migrateFoxes();
+        migrateRabbits();
+        startHunt();
+    }
 
+    private void startHunt() {
         var occupiedTerritories = this.filterTerritories(Territory::isOccupied);
         occupiedTerritories.forEach(Territory::startHunt);
     }

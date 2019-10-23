@@ -76,4 +76,11 @@ public class Territory {
             removeRabbit();
         }
     }
+
+    public void startReproduction() {
+        if (rabbitCount == 2)
+            this.rabbitCount++;
+        else
+            this.rabbitCount += 2;
+    }
 }
