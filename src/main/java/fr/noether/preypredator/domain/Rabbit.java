@@ -3,7 +3,7 @@ package fr.noether.preypredator.domain;
 public class Rabbit {
     private static int MAJORITY = 3;
 
-    private final int age;
+    public final int age;
 
     private Rabbit(int age) {
         this.age = age;
@@ -19,5 +19,9 @@ public class Rabbit {
 
     public boolean canBreed() {
         return this.age > MAJORITY;
+    }
+
+    public Rabbit incrementAge() {
+        return Rabbit.withAge(this.age + 1);
     }
 }

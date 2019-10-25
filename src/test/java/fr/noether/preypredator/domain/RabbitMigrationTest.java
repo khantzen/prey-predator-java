@@ -100,4 +100,30 @@ public class RabbitMigrationTest {
         Assertions.assertThat(territoryL0C0.totalRabbit()).isEqualTo(1);
         Assertions.assertThat(territoryL0C1.totalRabbit()).isEqualTo(2);
     }
+
+    @Test
+    public void rabbit_should_age_when_migrate() {
+        var mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(0, 0)
+                );
+
+        var mockedRandomGenerator = new MockRandomGenerator(0, 0, 0, 0, 0);
+
+        World world = new World.Builder()
+                .totalLine(1)
+                .totalColumn(2)
+                .baseRabbitCount(1)
+                .baseFoxCount(0)
+                .coordGenerator(mockedCoordGenerator)
+                .foxMigration(new SpecieMigration(mockedRandomGenerator))
+                .rabbitMigration(new SpecieMigration(mockedRandomGenerator))
+                .build();
+
+        world.migrateRabbits();
+
+        Territory territoryL0C1 = world.territoryAt(Coord.of(0, 1));
+        Rabbit rabbit = territoryL0C1.removeRabbit();
+        Assertions.assertThat(rabbit.age).isEqualTo(1);
+    }
 }

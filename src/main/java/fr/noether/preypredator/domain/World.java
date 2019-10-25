@@ -107,6 +107,7 @@ public class World {
         var adjacentPosition = territory.adjacentCoord(totalLine, totalColumn);
         while (territory.totalRabbit() != 0) {
             Rabbit selectedRabbit = territory.removeRabbit();
+            selectedRabbit = selectedRabbit.incrementAge();
             var destination = this.rabbitMigration
                     .nextCoord(adjacentPosition, territory.position(), territories);
             territoryAt(destination).addRabbitMigration(selectedRabbit);
