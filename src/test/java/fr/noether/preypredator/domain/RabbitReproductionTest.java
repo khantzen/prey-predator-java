@@ -32,6 +32,14 @@ public class RabbitReproductionTest {
         Assertions.assertThat(territory.totalRabbit()).isEqualTo(5);
     }
 
+    @Test
+    public void rabbit_should_not_breed_when_under_age_of_3() {
+        Territory territory = createTerritoryWith(1, 0);
+        territory.addRabbit(Rabbit.newBorn());
+        territory.startReproduction();
+        Assertions.assertThat(territory.totalRabbit()).isEqualTo(2);
+    }
+
     private Territory createTerritoryWithNoFoxes(int rabbitCount) {
         return this.createTerritoryWith(rabbitCount, 0);
     }
@@ -40,7 +48,7 @@ public class RabbitReproductionTest {
         var territory = Territory.at(Coord.of(0, 0));
 
         for (int i = 0; i < rabbitCount; i++) {
-            territory.addRabbit();
+            territory.addRabbit(Rabbit.withAge(5));
         }
 
         for (int i = 0; i < foxCount; i++) {

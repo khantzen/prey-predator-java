@@ -51,7 +51,7 @@ public class World {
     }
 
     private Consumer<Coord> addRabbit() {
-        return coord -> territoryAt(coord).addRabbit();
+        return coord -> territoryAt(coord).addRabbit(Rabbit.newBorn());
     }
 
     private Consumer<Coord> addFox() {
@@ -106,10 +106,10 @@ public class World {
     private void migrateRabbitFrom(Territory territory) {
         var adjacentPosition = territory.adjacentCoord(totalLine, totalColumn);
         while (territory.totalRabbit() != 0) {
-            territory.removeRabbit();
+            Rabbit selectedRabbit = territory.removeRabbit();
             var destination = this.rabbitMigration
                     .nextCoord(adjacentPosition, territory.position(), territories);
-            territoryAt(destination).addRabbitMigration();
+            territoryAt(destination).addRabbitMigration(selectedRabbit);
         }
     }
 

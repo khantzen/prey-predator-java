@@ -1,16 +1,24 @@
 package fr.noether.preypredator.domain;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Territory {
     private final Coord coord;
     private int rabbitCount;
     private int foxCount;
     private int migratingFox;
-    private int migratingRabbit;
+    private List<Rabbit> migratingRabbit;
+    private List<Rabbit> rabbits;
 
     private Territory(Coord coord) {
         this.coord = coord;
+        this.rabbits = new ArrayList<>();
+        this.migratingRabbit = new ArrayList<>();
     }
 
     static Territory at(Coord coord) {
@@ -21,12 +29,12 @@ public class Territory {
         return coord;
     }
 
-    public void addRabbit() {
-        rabbitCount += 1;
+    public void addRabbit(Rabbit rabbit) {
+        this.rabbits.add(rabbit);
     }
 
     public int totalRabbit() {
-        return rabbitCount;
+        return this.rabbits.size();
     }
 
     public void addFox() {
@@ -49,8 +57,8 @@ public class Territory {
         migratingFox++;
     }
 
-    public void addRabbitMigration() {
-        this.migratingRabbit++;
+    public void addRabbitMigration(Rabbit rabbit) {
+        this.migratingRabbit.add(rabbit);
     }
 
     public void endFoxMigration() {
@@ -59,12 +67,12 @@ public class Territory {
     }
 
     public void endRabbitMigration() {
-        rabbitCount = migratingRabbit;
-        migratingRabbit = 0;
+        this.rabbits = new ArrayList<>(this.migratingRabbit);
+        this.migratingRabbit = Collections.emptyList();
     }
 
-    public void removeRabbit() {
-        this.rabbitCount = Math.max(this.rabbitCount - 1, 0);
+    public Rabbit removeRabbit() {
+        return this.rabbits.remove(0);
     }
 
     public boolean isOccupied() {
@@ -79,8 +87,17 @@ public class Territory {
 
     public void startReproduction() {
         if (foxCount == 0) {
-            int rabbitCouple = rabbitCount / 2;
-            this.rabbitCount += rabbitCouple;
+            Predicate<Rabbit> byAdultRabbit = Rabbit::canBreed;
+
+            var adultRabbit = this.rabbits.stream()
+                    .filter(byAdultRabbit)
+                    .count();
+
+            var rabbitCouple = adultRabbit/2;
+
+            for (int i = 0; i < rabbitCouple; i++) {
+                this.rabbits.add(Rabbit.newBorn());
+            }
         }
     }
 }
