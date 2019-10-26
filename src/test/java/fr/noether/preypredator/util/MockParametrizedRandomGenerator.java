@@ -5,10 +5,10 @@ import fr.noether.preypredator.domain.Coord;
 import java.util.Collection;
 import java.util.List;
 
-public class MockRandomGenerator implements RandomGenerator {
+public class MockParametrizedRandomGenerator implements RandomGenerator {
     private final int[] values;
     private int index;
-    public MockRandomGenerator(int... values) {
+    public MockParametrizedRandomGenerator(int... values) {
         this.values = values;
         this.index = 0;
     }

@@ -79,8 +79,10 @@ public class Territory {
     }
 
     void startHunt() {
-        for (int i = 0; i < totalFox(); i++) {
-            removeRabbit();
+        if (this.containsRabbit()) {
+            for (int i = 0; i < totalFox(); i++) {
+                removeRabbit();
+            }
         }
     }
 
@@ -105,5 +107,9 @@ public class Territory {
 
     boolean containsRabbit() {
         return totalRabbit() != 0;
+    }
+
+    boolean containFoxes() {
+        return totalFox() != 0;
     }
 }

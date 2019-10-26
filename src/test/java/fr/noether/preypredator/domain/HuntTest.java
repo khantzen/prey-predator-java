@@ -1,7 +1,7 @@
 package fr.noether.preypredator.domain;
 
 import fr.noether.preypredator.util.MockCoordGenerator;
-import fr.noether.preypredator.util.MockRandomGenerator;
+import fr.noether.preypredator.util.MockParametrizedRandomGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class HuntTest {
                         Coord.of(0, 2)
                 );
 
-        Migration migration = new SpecieMigration(new MockRandomGenerator(0, 0));
+        Migration migration = new SpecieMigration(new MockParametrizedRandomGenerator(0, 0));
         var world = new World.Builder()
                 .baseFoxCount(1)
                 .baseRabbitCount(1)
@@ -47,7 +47,7 @@ public class HuntTest {
                         Coord.of(0, 2)
                 );
 
-        var migration = new SpecieMigration(new MockRandomGenerator(0, 0, 0, 0, 0, 0));
+        var migration = new SpecieMigration(new MockParametrizedRandomGenerator(0, 0, 0, 0, 0, 0));
         var world = new World.Builder()
                 .baseFoxCount(2)
                 .baseRabbitCount(3)
@@ -79,7 +79,7 @@ public class HuntTest {
                 );
 
         var migration = new SpecieMigration(
-                new MockRandomGenerator(0, 0, 0, 0, 0, 0)
+                new MockParametrizedRandomGenerator(0, 0, 0, 0, 0, 0)
         );
 
         var world = new World.Builder()

@@ -2,10 +2,10 @@ package fr.noether.preypredator.domain;
 
 public class Fox implements Specie {
     private static int MAJORITY = 3;
+    public final int age;
     private final boolean isFed;
-    private final int age;
 
-    public Fox(int age, boolean isFed) {
+    private Fox(int age, boolean isFed) {
         this.age = age;
         this.isFed = isFed;
     }
@@ -25,4 +25,5 @@ public class Fox implements Specie {
     public boolean canReproduce() {
         return this.isFed && this.age > MAJORITY;
     }
+
 }

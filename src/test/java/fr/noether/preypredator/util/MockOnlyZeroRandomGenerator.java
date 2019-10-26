@@ -4,7 +4,7 @@ import fr.noether.preypredator.domain.Coord;
 
 import java.util.List;
 
-public class MockRandomGeneratorOnly0 implements RandomGenerator {
+public class MockOnlyZeroRandomGenerator implements RandomGenerator {
     @Override
     public int nextInt(int max) {
         return 0;

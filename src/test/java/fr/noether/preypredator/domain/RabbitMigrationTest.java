@@ -2,7 +2,7 @@ package fr.noether.preypredator.domain;
 
 import fr.noether.preypredator.util.CoordGenerator;
 import fr.noether.preypredator.util.MockCoordGenerator;
-import fr.noether.preypredator.util.MockRandomGenerator;
+import fr.noether.preypredator.util.MockParametrizedRandomGenerator;
 import fr.noether.preypredator.util.RandomGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -17,7 +17,7 @@ public class RabbitMigrationTest {
                 );
 
         RandomGenerator mockedRandomGenerator =
-                new MockRandomGenerator(0, 0);
+                new MockParametrizedRandomGenerator(0, 0);
 
         World world = new World.Builder()
                 .totalLine(1)
@@ -49,7 +49,7 @@ public class RabbitMigrationTest {
                 );
 
         RandomGenerator mockedRandomGenerator =
-                new MockRandomGenerator(0, 1, 2, 3);
+                new MockParametrizedRandomGenerator(0, 1, 2, 3);
 
         World world = new World.Builder()
                 .totalLine(5)
@@ -80,7 +80,7 @@ public class RabbitMigrationTest {
                         Coord.of(0, 1)
                 );
 
-        var mockedRandomGenerator = new MockRandomGenerator(0, 0, 0, 0, 0);
+        var mockedRandomGenerator = new MockParametrizedRandomGenerator(0, 0, 0, 0, 0);
 
         World world = new World.Builder()
                 .totalLine(1)
@@ -108,7 +108,7 @@ public class RabbitMigrationTest {
                         Coord.of(0, 0)
                 );
 
-        var mockedRandomGenerator = new MockRandomGenerator(0, 0, 0, 0, 0);
+        var mockedRandomGenerator = new MockParametrizedRandomGenerator(0, 0, 0, 0, 0);
 
         World world = new World.Builder()
                 .totalLine(1)

@@ -1,8 +1,7 @@
 package fr.noether.preypredator.domain;
 
 import fr.noether.preypredator.util.MockCoordGenerator;
-import fr.noether.preypredator.util.MockRandomGenerator;
-import fr.noether.preypredator.util.MockRandomGeneratorOnly0;
+import fr.noether.preypredator.util.MockOnlyZeroRandomGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,7 +17,7 @@ public class WorldLifeCycleTest {
                 );
 
         Migration migration = new SpecieMigration(
-                new MockRandomGeneratorOnly0()
+                new MockOnlyZeroRandomGenerator()
         );
 
         var world = new World.Builder()
@@ -46,7 +45,30 @@ public class WorldLifeCycleTest {
     @Test
     @Ignore
     public void fox_should_met_and_reproduce() {
+        var mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(0, 0),
+                        Coord.of(0, 2)
+                );
 
+        Migration migration = new SpecieMigration(
+                new MockOnlyZeroRandomGenerator()
+        );
+
+        var world = new World.Builder()
+                .baseFoxCount(2)
+                .baseRabbitCount(0)
+                .totalLine(1)
+                .totalColumn(3)
+                .coordGenerator(mockedCoordGenerator)
+                .foxMigration(migration)
+                .rabbitMigration(migration)
+                .coordGenerator(mockedCoordGenerator)
+                .build();
+
+        launchCycle(4, world);
+
+        Assertions.assertThat(world.totalFoxPopulation()).isEqualTo(3);
     }
 
     @Test

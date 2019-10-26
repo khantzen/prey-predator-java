@@ -55,7 +55,7 @@ public class World {
     }
 
     private Consumer<Coord> addFox() {
-        return coord -> territoryAt(coord).addFox(Fox.hungry());
+        return coord -> territoryAt(coord).addFox(Fox.newBorn());
     }
 
     public int size() {
@@ -68,6 +68,11 @@ public class World {
         startHunt();
         filterTerritories(Territory::containsRabbit)
                 .forEach(Territory::startRabbitReproduction);
+
+        filterTerritories(Territory::containFoxes)
+                .forEach(Territory::startFoxReproduction);
+
+
     }
 
     public void startHunt() {
@@ -76,7 +81,7 @@ public class World {
     }
 
     public void migrateFoxes() {
-        Predicate<? super Territory> byFox = t -> t.totalFox() != 0;
+        Predicate<? super Territory> byFox = t -> t.containFoxes();
         migrateSpecie(byFox, this::migrateFoxesFrom);
         territories.forEach(Territory::endFoxMigration);
     }
@@ -97,10 +102,13 @@ public class World {
 
     private void migrateFoxesFrom(Territory territory) {
         var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
-        while (territory.totalFox() != 0) {
+        while (territory.containFoxes()) {
             Fox fox = territory.removeFox();
+            fox = Fox.withAge(fox.age + 1);
+
             var destination = this.foxMigration
                     .nextCoord(adjacentCoords, territory.position, territories);
+
             territoryAt(destination).addFoxToMigration(fox);
         }
     }
@@ -125,7 +133,15 @@ public class World {
     public long totalRabbitPopulation() {
         return filterTerritories(Territory::containsRabbit).stream()
                 .map(Territory::totalRabbit)
-                .reduce(0, Integer::sum);
+                .map(Integer::longValue)
+                .reduce(0L, Long::sum);
+    }
+
+    public long totalFoxPopulation() {
+        return filterTerritories(Territory::containFoxes).stream()
+                .map(Territory::totalFox)
+                .map(Integer::longValue)
+                .reduce(0L, Long::sum);
     }
 
     private List<Territory> filterTerritories(Predicate<? super Territory> byPredicate) {
