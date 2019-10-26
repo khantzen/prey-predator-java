@@ -5,6 +5,7 @@ import fr.noether.preypredator.util.CoordGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
@@ -84,7 +85,10 @@ public class World {
         territories.forEach(Territory::endRabbitMigration);
     }
 
-    private void launchSpecieReproduction(Predicate<Territory> specieFiltering, Consumer<Territory> launchReproduction) {
+    private void launchSpecieReproduction(
+            Predicate<Territory> specieFiltering,
+            Consumer<Territory> launchReproduction
+    ) {
         filterTerritories(specieFiltering)
                 .forEach(launchReproduction);
     }
@@ -128,15 +132,18 @@ public class World {
     }
 
     public long totalRabbitPopulation() {
-        return filterTerritories(Territory::containsRabbit).stream()
-                .map(Territory::totalRabbit)
-                .map(Integer::longValue)
-                .reduce(0L, Long::sum);
+        return totalSpeciePopulation(Territory::containsRabbit, Territory::totalRabbit);
     }
 
     public long totalFoxPopulation() {
-        return filterTerritories(Territory::containFoxes).stream()
-                .map(Territory::totalFox)
+        return totalSpeciePopulation(Territory::containFoxes, Territory::totalFox);
+    }
+
+    private long totalSpeciePopulation(
+            Predicate<Territory> specieFilter,
+            Function<Territory, Integer> specieCount) {
+        return filterTerritories(specieFilter).stream()
+                .map(specieCount)
                 .map(Integer::longValue)
                 .reduce(0L, Long::sum);
     }
@@ -146,7 +153,6 @@ public class World {
                 .filter(byPredicate)
                 .collect(toList());
     }
-
 
     public static class Builder {
         private int totalLine;
