@@ -141,7 +141,8 @@ public class World {
 
     private long totalSpeciePopulation(
             Predicate<Territory> specieFilter,
-            Function<Territory, Integer> specieCount) {
+            Function<Territory, Integer> specieCount
+    ) {
         return filterTerritories(specieFilter).stream()
                 .map(specieCount)
                 .map(Integer::longValue)
