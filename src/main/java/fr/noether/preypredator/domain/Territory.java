@@ -102,15 +102,19 @@ public class Territory {
     }
 
     public void startFoxReproduction() {
+        long foxCouple = countSpecieCouple();
+
+        for (int i = 0; i < foxCouple; i++)
+            this.foxes.add(Fox.newBorn());
+    }
+
+    private long countSpecieCouple() {
         Predicate<Specie> byFedFox = Specie::canBreed;
 
         var fedFox = this.foxes.stream()
                 .filter(byFedFox)
                 .count();
 
-        var foxCouple = fedFox / 2;
-
-        for (int i = 0; i < foxCouple; i++)
-            this.foxes.add(Fox.newBorn());
+        return fedFox / 2;
     }
 }
