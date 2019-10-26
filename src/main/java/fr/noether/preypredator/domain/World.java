@@ -65,7 +65,6 @@ public class World {
     public void lifeHappen() {
         migrateFoxes();
         migrateRabbits();
-        startHunt();
         filterTerritories(Territory::containsRabbit)
                 .forEach(Territory::startRabbitReproduction);
 

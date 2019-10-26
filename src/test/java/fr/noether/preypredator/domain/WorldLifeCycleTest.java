@@ -71,7 +71,6 @@ public class WorldLifeCycleTest {
     }
 
     @Test
-    @Ignore
     public void fox_and_rabbit_should_met_start_an_hunt_and_reproduce() {
 
     }
