@@ -32,9 +32,9 @@ public class World {
 
     private static List<Territory> buildTerritories(int totalLine, int totalColumn) {
         List<Territory> territories = new ArrayList<>();
-        for (int i = 0; i < totalLine; i++) {
-            for (int j = 0; j < totalColumn; j++) {
-                Coord position = Coord.of(i, j);
+        for (int line = 0; line < totalLine; line++) {
+            for (int column = 0; column < totalColumn; column++) {
+                Coord position = Coord.of(line, column);
                 territories.add(Territory.at(position));
             }
         }
