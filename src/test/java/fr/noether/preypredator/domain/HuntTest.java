@@ -27,7 +27,9 @@ public class HuntTest {
                 .coordGenerator(mockedCoordGenerator)
                 .build();
 
-        world.lifeHappen();
+        world.migrateRabbits();
+        world.migrateFoxes();
+        world.startHunt();
 
         var territoryL0C1 = world.territoryAt(Coord.of(0, 1));
         Assertions.assertThat(territoryL0C1.totalRabbit()).isEqualTo(0);
@@ -57,7 +59,9 @@ public class HuntTest {
                 .coordGenerator(mockedCoordGenerator)
                 .build();
 
-        world.lifeHappen();
+        world.migrateRabbits();
+        world.migrateFoxes();
+        world.startHunt();
 
         var territoryL0C1 = world.territoryAt(Coord.of(0, 1));
         Assertions.assertThat(territoryL0C1.totalRabbit()).isEqualTo(1);
@@ -89,7 +93,9 @@ public class HuntTest {
                 .coordGenerator(mockedCoordGenerator)
                 .build();
 
-        world.lifeHappen();
+        world.migrateRabbits();
+        world.migrateFoxes();
+        world.startHunt();
 
         var territoryL0C0 = world.territoryAt(Coord.of(0, 0));
         Assertions.assertThat(territoryL0C0.totalFox()).isEqualTo(0);

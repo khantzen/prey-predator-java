@@ -68,7 +68,7 @@ public class World {
         startHunt();
     }
 
-    private void startHunt() {
+    public void startHunt() {
         var occupiedTerritories = this.filterTerritories(Territory::isOccupied);
         occupiedTerritories.forEach(Territory::startHunt);
     }
