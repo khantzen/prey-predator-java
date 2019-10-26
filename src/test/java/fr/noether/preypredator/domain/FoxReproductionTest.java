@@ -30,4 +30,17 @@ public class FoxReproductionTest {
 
         Assertions.assertThat(territory.totalFox()).isEqualTo(6);
     }
+
+    @Test
+    public void three_foxes_should_produces_one_fox() {
+        Territory territory = Territory.at(Coord.of(0,0));
+
+        territory.addFox();
+        territory.addFox();
+        territory.addFox();
+
+        territory.startFoxReproduction();
+
+        Assertions.assertThat(territory.totalFox()).isEqualTo(4);
+    }
 }
