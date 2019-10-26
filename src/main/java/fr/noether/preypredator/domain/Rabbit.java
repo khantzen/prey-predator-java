@@ -1,6 +1,6 @@
 package fr.noether.preypredator.domain;
 
-public class Rabbit {
+public class Rabbit implements Specie {
     private static int MAJORITY = 3;
 
     public final int age;

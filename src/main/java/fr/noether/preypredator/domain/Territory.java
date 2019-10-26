@@ -87,7 +87,7 @@ public class Territory {
 
     public void startRabbitReproduction() {
         if (this.foxes.size() == 0) {
-            Predicate<Rabbit> byAdultRabbit = Rabbit::canBreed;
+            Predicate<Specie> byAdultRabbit = Specie::canBreed;
 
             var adultRabbit = this.rabbits.stream()
                     .filter(byAdultRabbit)
@@ -102,7 +102,7 @@ public class Territory {
     }
 
     public void startFoxReproduction() {
-        Predicate<Fox> byFedFox = Fox::canBreed;
+        Predicate<Specie> byFedFox = Specie::canBreed;
 
         var fedFox = this.foxes.stream()
                 .filter(byFedFox)

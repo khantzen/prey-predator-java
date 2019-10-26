@@ -1,6 +1,6 @@
 package fr.noether.preypredator.domain;
 
-public class Fox {
+public class Fox implements Specie {
     private final boolean isFed;
 
     public Fox(boolean isFed) {
