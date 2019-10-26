@@ -37,11 +37,11 @@ public class Fox implements Specie {
         return this.isFed && this.age > MAJORITY;
     }
 
-    public Fox feed() {
+    Fox feed() {
         return new Fox(this.age, this.age);
     }
 
-    public boolean shouldDie() {
+    boolean shouldDie() {
         return this.age - lastMeal >= 8;
     }
 }

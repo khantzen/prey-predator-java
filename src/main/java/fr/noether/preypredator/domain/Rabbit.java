@@ -21,7 +21,7 @@ public class Rabbit implements Specie {
         return this.age > MAJORITY;
     }
 
-    public Rabbit incrementAge() {
+    Rabbit incrementAge() {
         return Rabbit.withAge(this.age + 1);
     }
 }
