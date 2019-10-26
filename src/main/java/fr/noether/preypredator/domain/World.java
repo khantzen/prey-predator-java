@@ -136,6 +136,7 @@ public class World {
     public Territory territoryAt(Coord wantedPosition) {
         Predicate<Territory> byWantedPosition = t -> t.position.equals(wantedPosition);
         var territoriesAtPosition = filterTerritories(byWantedPosition);
+        assert territoriesAtPosition.size() == 1;
         return territoriesAtPosition.get(0);
     }
 
