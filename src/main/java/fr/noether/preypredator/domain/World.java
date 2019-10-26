@@ -20,14 +20,17 @@ public class World {
 
     private final List<Territory> territories;
 
+    private final CoordGenerator coordGenerator;
+
     private World(Builder builder) {
         this.totalLine = builder.totalLine;
         this.totalColumn = builder.totalColumn;
         this.foxMigration = builder.foxMigration;
         this.rabbitMigration = builder.rabbitMigration;
         this.territories = buildTerritories(builder.totalLine, builder.totalColumn);
-        populateWorldWith(builder.baseRabbitCount, builder.coordGenerator, this.addRabbit());
-        populateWorldWith(builder.baseFoxCount, builder.coordGenerator, this.addFox());
+        this.coordGenerator = builder.coordGenerator;
+        populateWorldWith(builder.baseRabbitCount, this.addRabbit());
+        populateWorldWith(builder.baseFoxCount, this.addFox());
     }
 
     private static List<Territory> buildTerritories(int totalLine, int totalColumn) {
@@ -43,11 +46,10 @@ public class World {
 
     private void populateWorldWith(
             int populationCount,
-            CoordGenerator coordGenerator,
             Consumer<Coord> populateMethod
     ) {
         IntStream.range(0, populationCount)
-                .mapToObj(i -> coordGenerator.next())
+                .mapToObj(i -> this.coordGenerator.next())
                 .forEach(populateMethod);
     }
 
@@ -59,11 +61,11 @@ public class World {
         return coord -> territoryAt(coord).addFox(Fox.newBorn());
     }
 
-    public int size() {
-        return totalLine * totalColumn;
+    int size() {
+        return territories.size();
     }
 
-    public void lifeHappen() {
+    public void launchCycle() {
         migrateFoxes();
         migrateRabbits();
         startHunt();
@@ -71,17 +73,17 @@ public class World {
         launchSpecieReproduction(Territory::containFoxes, Territory::startFoxReproduction);
     }
 
-    public void startHunt() {
+    void startHunt() {
         var occupiedTerritories = this.filterTerritories(Territory::isOccupied);
         occupiedTerritories.forEach(Territory::startHunt);
     }
 
-    public void migrateFoxes() {
+    void migrateFoxes() {
         migrateSpecie(Territory::containFoxes, this::migrateFoxesFrom);
         territories.forEach(Territory::endFoxMigration);
     }
 
-    public void migrateRabbits() {
+    void migrateRabbits() {
         migrateSpecie(Territory::containsRabbits, this::migrateRabbitFrom);
         territories.forEach(Territory::endRabbitMigration);
     }
@@ -136,7 +138,7 @@ public class World {
         }
     }
 
-    public Territory territoryAt(Coord wantedPosition) {
+    Territory territoryAt(Coord wantedPosition) {
         Predicate<Territory> byWantedPosition = t -> t.position.equals(wantedPosition);
         var territoriesAtPosition = filterTerritories(byWantedPosition);
         assert territoriesAtPosition.size() == 1;
@@ -165,6 +167,16 @@ public class World {
                 .map(specieCount)
                 .map(Integer::longValue)
                 .reduce(0L, Long::sum);
+    }
+
+    public void spawnDivinelyANewBornRabbit() {
+        Coord position = this.coordGenerator.next();
+        territoryAt(position).addRabbit(Rabbit.newBorn());
+    }
+
+    public void spawnDivinelyANewBornFox() {
+        Coord position = this.coordGenerator.next();
+        territoryAt(position).addFox(Fox.newBorn());
     }
 
     private List<Territory> filterTerritories(Predicate<? super Territory> byPredicate) {

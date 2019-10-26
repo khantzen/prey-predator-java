@@ -3,7 +3,6 @@ package fr.noether.preypredator.domain;
 import fr.noether.preypredator.util.MockCoordGenerator;
 import fr.noether.preypredator.util.MockOnlyZeroRandomGenerator;
 import org.assertj.core.api.Assertions;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class WorldLifeCycleTest {
@@ -66,7 +65,7 @@ public class WorldLifeCycleTest {
 
     private void launchCycle(int cycle, World world) {
         for (int i = 0; i < cycle; i++) {
-            world.lifeHappen();
+            world.launchCycle();
         }
     }
 
