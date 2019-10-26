@@ -1,7 +1,6 @@
 package fr.noether.preypredator.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Territory {
@@ -79,7 +78,7 @@ public class Territory {
     }
 
     void startHunt() {
-        if (this.containsRabbit()) {
+        if (this.containsRabbits()) {
             for (int i = 0; i < totalFox(); i++) {
                 removeRabbit();
             }
@@ -105,7 +104,7 @@ public class Territory {
             this.foxes.add(Fox.newBorn());
     }
 
-    boolean containsRabbit() {
+    boolean containsRabbits() {
         return totalRabbit() != 0;
     }
 
