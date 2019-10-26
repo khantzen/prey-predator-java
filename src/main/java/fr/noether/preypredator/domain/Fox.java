@@ -8,29 +8,29 @@ public class Fox implements Specie {
     public final boolean isFed;
     private final int lastMeal;
 
-    private Fox(int age, boolean isFed, int lastMeal) {
+    private Fox(int age, int lastMeal) {
         this.age = age;
         this.isFed = age - lastMeal < HUNGRY_STATE;
         this.lastMeal = lastMeal;
     }
 
     public static Fox withAge(int age) {
-        return new Fox(age, true, age);
+        return new Fox(age, age);
     }
 
     static Fox newBorn() {
-        return new Fox(0, true, 0);
+        return new Fox(0, 0);
     }
 
     Fox incrementFoxAge() {
         if (age - lastMeal >= HUNGRY_STATE) {
-            return new Fox(age+1, false, lastMeal);
+            return new Fox(age+1, lastMeal);
         }
-        return new Fox(age + 1, true, lastMeal);
+        return new Fox(age + 1, lastMeal);
     }
 
     public static Fox hungry() {
-        return new Fox(5, false, 0);
+        return new Fox(5, 0);
     }
 
     public boolean canReproduce() {
@@ -38,7 +38,7 @@ public class Fox implements Specie {
     }
 
     public Fox feed() {
-        return new Fox(this.age, true, this.age);
+        return new Fox(this.age, this.age);
     }
 
     public boolean shouldDie() {
