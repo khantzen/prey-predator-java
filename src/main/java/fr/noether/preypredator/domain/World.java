@@ -55,7 +55,7 @@ public class World {
     }
 
     private Consumer<Coord> addFox() {
-        return coord -> territoryAt(coord).addFox();
+        return coord -> territoryAt(coord).addFox(Fox.hungry());
     }
 
     public int size() {
@@ -96,10 +96,10 @@ public class World {
     private void migrateFoxesFrom(Territory territory) {
         var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
         while (territory.totalFox() != 0) {
-            territory.removeFox();
+            Fox fox = territory.removeFox();
             var destination = this.foxMigration
-                    .nextCoord(adjacentCoords, territory.position(), territories);
-            territoryAt(destination).addFoxToMigration();
+                    .nextCoord(adjacentCoords, territory.position, territories);
+            territoryAt(destination).addFoxToMigration(fox);
         }
     }
 
@@ -109,13 +109,13 @@ public class World {
             Rabbit selectedRabbit = territory.removeRabbit();
             selectedRabbit = selectedRabbit.incrementAge();
             var destination = this.rabbitMigration
-                    .nextCoord(adjacentPosition, territory.position(), territories);
+                    .nextCoord(adjacentPosition, territory.position, territories);
             territoryAt(destination).addRabbitMigration(selectedRabbit);
         }
     }
 
-    public Territory territoryAt(Coord position) {
-        Predicate<Territory> byWantedPosition = t -> t.position().equals(position);
+    public Territory territoryAt(Coord wantedPosition) {
+        Predicate<Territory> byWantedPosition = t -> t.position.equals(wantedPosition);
         var territoriesAtPosition = filterTerritories(byWantedPosition);
         return territoriesAtPosition.get(0);
     }
@@ -125,6 +125,7 @@ public class World {
                 .filter(byPredicate)
                 .collect(toList());
     }
+
 
     public static class Builder {
         private int totalLine;

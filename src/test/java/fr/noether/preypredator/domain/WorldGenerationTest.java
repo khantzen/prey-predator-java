@@ -33,11 +33,11 @@ public class WorldGenerationTest {
 
         Assertions.assertThat(territoryL5C5).isNotNull();
 
-        Assertions.assertThat(territoryL5C5.position())
+        Assertions.assertThat(territoryL5C5.position)
                 .isNotEqualTo(Coord.of(5, 8));
-        Assertions.assertThat(territoryL5C5.position())
+        Assertions.assertThat(territoryL5C5.position)
                 .isEqualTo(Coord.of(5, 5));
-        Assertions.assertThat(territoryL6C7.position())
+        Assertions.assertThat(territoryL6C7.position)
                 .isEqualTo(Coord.of(6, 7));
     }
 

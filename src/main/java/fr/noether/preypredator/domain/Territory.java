@@ -6,53 +6,59 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class Territory {
-    private final Coord coord;
-    private int rabbitCount;
-    private int foxCount;
-    private int migratingFox;
-    private List<Rabbit> migratingRabbit;
+    public final Coord position;
+
     private List<Rabbit> rabbits;
+    private List<Rabbit> migratingRabbit;
+
+    private List<Fox> foxes;
+    private List<Fox> migratingFoxes;
 
     private Territory(Coord coord) {
-        this.coord = coord;
+        this.position = coord;
         this.rabbits = new ArrayList<>();
         this.migratingRabbit = new ArrayList<>();
+        this.foxes = new ArrayList<>();
+        this.migratingFoxes = new ArrayList<>();
     }
 
     static Territory at(Coord coord) {
         return new Territory(coord);
     }
 
-    public Coord position() {
-        return coord;
-    }
 
     public void addRabbit(Rabbit rabbit) {
         this.rabbits.add(rabbit);
+    }
+
+    public Rabbit removeRabbit() {
+        return this.rabbits.remove(0);
     }
 
     public int totalRabbit() {
         return this.rabbits.size();
     }
 
-    public void addFox() {
-        foxCount += 1;
+
+    public void addFox(Fox fox) {
+        this.foxes.add(fox);
     }
 
-    public void removeFox() {
-        foxCount--;
+    public Fox removeFox() {
+        return this.foxes.remove(0);
     }
 
     public int totalFox() {
-        return foxCount;
+        return this.foxes.size();
     }
+
 
     public List<Coord> adjacentCoord(int totalLine, int totalColumn) {
-        return this.coord.adjacent(totalLine, totalColumn);
+        return this.position.adjacent(totalLine, totalColumn);
     }
 
-    public void addFoxToMigration() {
-        migratingFox++;
+    public void addFoxToMigration(Fox fox) {
+        this.migratingFoxes.add(fox);
     }
 
     public void addRabbitMigration(Rabbit rabbit) {
@@ -60,8 +66,8 @@ public class Territory {
     }
 
     public void endFoxMigration() {
-        foxCount = migratingFox;
-        migratingFox = 0;
+        this.foxes = new ArrayList<>(this.migratingFoxes);
+        migratingFoxes = Collections.emptyList();
     }
 
     public void endRabbitMigration() {
@@ -69,12 +75,8 @@ public class Territory {
         this.migratingRabbit = Collections.emptyList();
     }
 
-    public Rabbit removeRabbit() {
-        return this.rabbits.remove(0);
-    }
-
     public boolean isOccupied() {
-        return this.rabbitCount != 0 || this.totalFox() != 0;
+        return this.rabbits.size() != 0 || this.totalFox() != 0;
     }
 
     void startHunt() {
@@ -84,14 +86,14 @@ public class Territory {
     }
 
     public void startRabbitReproduction() {
-        if (foxCount == 0) {
+        if (this.foxes.size() == 0) {
             Predicate<Rabbit> byAdultRabbit = Rabbit::canBreed;
 
             var adultRabbit = this.rabbits.stream()
                     .filter(byAdultRabbit)
                     .count();
 
-            var rabbitCouple = adultRabbit/2;
+            var rabbitCouple = adultRabbit / 2;
 
             for (int i = 0; i < rabbitCouple; i++) {
                 this.rabbits.add(Rabbit.newBorn());
@@ -100,6 +102,15 @@ public class Territory {
     }
 
     public void startFoxReproduction() {
-        foxCount += foxCount / 2;
+        Predicate<Fox> byFedFox = Fox::canBreed;
+
+        var fedFox = this.foxes.stream()
+                .filter(byFedFox)
+                .count();
+
+        var foxCouple = fedFox / 2;
+
+        for (int i = 0; i < foxCouple; i++)
+            this.foxes.add(Fox.newBorn());
     }
 }

@@ -52,7 +52,7 @@ public class RabbitReproductionTest {
         }
 
         for (int i = 0; i < foxCount; i++) {
-            territory.addFox();
+            territory.addFox(Fox.hungry());
         }
 
         return territory;
