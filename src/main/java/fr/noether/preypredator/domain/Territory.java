@@ -3,7 +3,6 @@ package fr.noether.preypredator.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class Territory {
     public final Coord position;
@@ -88,7 +87,7 @@ public class Territory {
     public void startRabbitReproduction() {
         if (this.foxes.size() == 0) {
             var newBornRabbitCount =
-                    Reproduction.countSpecieCouple(new ArrayList<>(this.rabbits));
+                    Reproduction.countNewBorn(new ArrayList<>(this.rabbits));
 
             for (int i = 0; i < newBornRabbitCount; i++) {
                 this.rabbits.add(Rabbit.newBorn());
@@ -98,7 +97,7 @@ public class Territory {
 
     public void startFoxReproduction() {
         long newBornFoxCount =
-                Reproduction.countSpecieCouple(new ArrayList<>(this.foxes));
+                Reproduction.countNewBorn(new ArrayList<>(this.foxes));
 
         for (int i = 0; i < newBornFoxCount; i++)
             this.foxes.add(Fox.newBorn());

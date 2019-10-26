@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class Reproduction {
-    public static long countSpecieCouple(List<Specie> species) {
+    public static long countNewBorn(List<Specie> species) {
         Predicate<Specie> byReproductionAbility = Specie::canBreed;
 
         var individualThatCanReproduce = species.stream()
