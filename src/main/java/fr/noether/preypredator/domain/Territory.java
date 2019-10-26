@@ -87,13 +87,7 @@ public class Territory {
 
     public void startRabbitReproduction() {
         if (this.foxes.size() == 0) {
-            Predicate<Specie> byAdultRabbit = Specie::canBreed;
-
-            var adultRabbit = this.rabbits.stream()
-                    .filter(byAdultRabbit)
-                    .count();
-
-            var rabbitCouple = adultRabbit / 2;
+            var rabbitCouple = countSpecieCouple(new ArrayList<>(this.rabbits));
 
             for (int i = 0; i < rabbitCouple; i++) {
                 this.rabbits.add(Rabbit.newBorn());
