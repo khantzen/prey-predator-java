@@ -26,11 +26,6 @@ public class Coord {
                 column == coord.column;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(line, column);
-    }
-
     public List<Coord> adjacent(int totalLine, int totalColumn) {
         var adjacentCoords = new ArrayList<Coord>();
         if (bottomCoordIsValid(totalLine)) {
