@@ -114,7 +114,9 @@ public class World {
                             territories
                     );
 
-            territoryAt(destination).addFoxToMigration(fox.incrementFoxAge());
+            if (!fox.shouldDie()) {
+                territoryAt(destination).addFoxToMigration(fox.incrementFoxAge());
+            }
         }
     }
 

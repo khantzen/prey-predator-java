@@ -186,5 +186,28 @@ public class FoxMigrationTest {
         Assertions.assertThat(fox.isFed).isFalse();
     }
 
+    @Test
+    public void fox_should_die_from_hunger_after_3_migrations_being_hungry() {
+        var mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(0, 0)
+                );
 
+        var mockedRandomGenerator = new MockOnlyZeroRandomGenerator();
+
+        World world = new World.Builder()
+                .totalLine(1)
+                .totalColumn(2)
+                .baseRabbitCount(0)
+                .baseFoxCount(1)
+                .coordGenerator(mockedCoordGenerator)
+                .foxMigration(new SpecieMigration(mockedRandomGenerator))
+                .build();
+
+        for (int i = 0; i < 9; i++) {
+            world.migrateFoxes();
+        }
+
+        Assertions.assertThat(world.totalFoxPopulation()).isEqualTo(0);
+    }
 }
