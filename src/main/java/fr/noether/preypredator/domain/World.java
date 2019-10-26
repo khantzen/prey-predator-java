@@ -66,6 +66,7 @@ public class World {
     public void lifeHappen() {
         migrateFoxes();
         migrateRabbits();
+        startHunt();
         launchSpecieReproduction(Territory::containsRabbits, Territory::startRabbitReproduction);
         launchSpecieReproduction(Territory::containFoxes, Territory::startFoxReproduction);
     }
