@@ -1,8 +1,6 @@
 package fr.noether.preypredator.domain;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
@@ -85,7 +83,7 @@ public class Territory {
         }
     }
 
-    public void startReproduction() {
+    public void startRabbitReproduction() {
         if (foxCount == 0) {
             Predicate<Rabbit> byAdultRabbit = Rabbit::canBreed;
 
@@ -99,5 +97,9 @@ public class Territory {
                 this.rabbits.add(Rabbit.newBorn());
             }
         }
+    }
+
+    public void startFoxReproduction() {
+        this.foxCount++;
     }
 }

@@ -7,28 +7,28 @@ public class RabbitReproductionTest {
     @Test
     public void when_two_rabbits_met_with_no_foxes_should_produce_one_rabbit() {
         Territory territory = createTerritoryWithNoFoxes(2);
-        territory.startReproduction();
+        territory.startRabbitReproduction();
         Assertions.assertThat(territory.totalRabbit()).isEqualTo(3);
     }
 
     @Test
     public void when_four_rabbit_mets_with_no_foxes_should_produce_two_rabbits() {
         Territory territory = createTerritoryWithNoFoxes(4);
-        territory.startReproduction();
+        territory.startRabbitReproduction();
         Assertions.assertThat(territory.totalRabbit()).isEqualTo(6);
     }
 
     @Test
     public void when_five_rabbits_met_with_no_foxes_should_produce_two_rabbits() {
         Territory territory = createTerritoryWithNoFoxes(5);
-        territory.startReproduction();
+        territory.startRabbitReproduction();
         Assertions.assertThat(territory.totalRabbit()).isEqualTo(7);
     }
 
     @Test
     public void rabbit_should_not_breed_when_a_fox_is_present() {
         Territory territory = createTerritoryWith(5, 1);
-        territory.startReproduction();
+        territory.startRabbitReproduction();
         Assertions.assertThat(territory.totalRabbit()).isEqualTo(5);
     }
 
@@ -36,7 +36,7 @@ public class RabbitReproductionTest {
     public void rabbit_should_not_breed_when_under_age_of_3() {
         Territory territory = createTerritoryWith(1, 0);
         territory.addRabbit(Rabbit.newBorn());
-        territory.startReproduction();
+        territory.startRabbitReproduction();
         Assertions.assertThat(territory.totalRabbit()).isEqualTo(2);
     }
 
