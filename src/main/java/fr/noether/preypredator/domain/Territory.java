@@ -81,6 +81,8 @@ public class Territory {
         int rabbitToRemove = Math.min(totalFox(), totalRabbit());
         for (int i = 0; i < rabbitToRemove; i++) {
             removeRabbit();
+            Fox fox = removeFox();
+            addFox(fox.feed());
         }
     }
 

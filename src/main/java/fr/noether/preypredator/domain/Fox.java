@@ -32,4 +32,8 @@ public class Fox implements Specie {
     public boolean canReproduce() {
         return this.isFed && this.age > MAJORITY;
     }
+
+    public Fox feed() {
+        return new Fox(this.age, true);
+    }
 }
