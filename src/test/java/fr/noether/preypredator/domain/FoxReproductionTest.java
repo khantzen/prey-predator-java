@@ -32,6 +32,7 @@ public class FoxReproductionTest {
         for (int i = 0; i < foxCount; i++) {
             territory.addFox();
         }
+
         return territory;
     }
 }
