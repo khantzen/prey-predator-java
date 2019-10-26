@@ -18,7 +18,7 @@ public class Fox implements Specie {
         return new Fox(age, true, age);
     }
 
-    public static Fox newBorn() {
+    static Fox newBorn() {
         return new Fox(0, true, 0);
     }
 
