@@ -152,8 +152,37 @@ public class FoxMigrationTest {
     }
 
     @Test
-    @Ignore
-    public void fox_should_die_when_they_didnt_eat_at_least_one_time_in_5_migration() {
+    public void fox_should_be_hungry_when_it_didnt_eat_at_least_one_time_in_5_cycle() {
+        var mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(0, 0)
+                );
 
+        var mockedRandomGenerator = new MockOnlyZeroRandomGenerator();
+
+        World world = new World.Builder()
+                .totalLine(1)
+                .totalColumn(2)
+                .baseRabbitCount(0)
+                .baseFoxCount(1)
+                .coordGenerator(mockedCoordGenerator)
+                .foxMigration(new SpecieMigration(mockedRandomGenerator))
+                .build();
+
+        for (int i = 0; i < 4; i++) {
+            world.migrateFoxes();
+        }
+
+        var territoryL0C0 = world.territoryAt(Coord.of(0, 0));
+        Fox fox = territoryL0C0.removeFox();
+        Assertions.assertThat(fox.isFed).isTrue();
+        territoryL0C0.addFox(fox);
+
+        for (int i = 0; i < 2; i++) {
+            world.migrateFoxes();
+        }
+
+        fox = territoryL0C0.removeFox();
+        Assertions.assertThat(fox.isFed).isFalse();
     }
 }

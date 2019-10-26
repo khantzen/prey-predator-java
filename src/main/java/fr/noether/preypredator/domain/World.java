@@ -142,11 +142,17 @@ public class World {
     }
 
     public long totalRabbitPopulation() {
-        return totalSpeciePopulation(Territory::containsRabbits, Territory::totalRabbit);
+        return totalSpeciePopulation(
+                Territory::containsRabbits,
+                Territory::totalRabbit
+        );
     }
 
     public long totalFoxPopulation() {
-        return totalSpeciePopulation(Territory::containFoxes, Territory::totalFox);
+        return totalSpeciePopulation(
+                Territory::containFoxes,
+                Territory::totalFox
+        );
     }
 
     private long totalSpeciePopulation(

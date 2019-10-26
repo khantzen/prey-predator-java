@@ -3,7 +3,7 @@ package fr.noether.preypredator.domain;
 public class Fox implements Specie {
     private static int MAJORITY = 3;
     public final int age;
-    private final boolean isFed;
+    public final boolean isFed;
 
     private Fox(int age, boolean isFed) {
         this.age = age;
@@ -19,7 +19,10 @@ public class Fox implements Specie {
     }
 
     Fox incrementFoxAge() {
-        return withAge(age + 1);
+        if (age >= 5) {
+            return new Fox(age+1, false);
+        }
+        return new Fox(age + 1, true);
     }
 
     public static Fox hungry() {
