@@ -24,7 +24,7 @@ public class Fox implements Specie {
 
     Fox incrementFoxAge() {
         if (age - lastMeal >= HUNGRY_STATE) {
-            return new Fox(age+1, lastMeal);
+            return new Fox(age + 1, lastMeal);
         }
         return new Fox(age + 1, lastMeal);
     }
