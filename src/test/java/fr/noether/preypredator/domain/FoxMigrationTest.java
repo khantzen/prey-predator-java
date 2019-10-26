@@ -186,18 +186,5 @@ public class FoxMigrationTest {
         Assertions.assertThat(fox.isFed).isFalse();
     }
 
-    @Test
-    public void hungry_fox_should_be_fed_when_he_eats_a_rabbit() {
-        var territory = Territory.at(Coord.of(0, 0));
 
-        territory.addFox(Fox.hungry());
-        territory.addRabbit(Rabbit.newBorn());
-
-        territory.startHunt();
-
-        Assertions.assertThat(territory.totalRabbit()).isEqualTo(0);
-
-        Fox fox = territory.removeFox();
-        Assertions.assertThat(fox.isFed).isTrue();
-    }
 }
