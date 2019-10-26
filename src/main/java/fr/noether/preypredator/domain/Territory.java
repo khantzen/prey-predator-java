@@ -102,6 +102,4 @@ public class Territory {
         for (int i = 0; i < newBornFoxCount; i++)
             this.foxes.add(Fox.newBorn());
     }
-
-
 }
