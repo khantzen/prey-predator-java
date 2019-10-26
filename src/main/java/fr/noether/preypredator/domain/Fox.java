@@ -23,7 +23,7 @@ public class Fox implements Specie {
     }
 
     Fox incrementFoxAge() {
-        if (age >= HUNGRY_STATE) {
+        if (age - lastMeal >= HUNGRY_STATE) {
             return new Fox(age+1, false, lastMeal);
         }
         return new Fox(age + 1, true, lastMeal);
@@ -42,6 +42,6 @@ public class Fox implements Specie {
     }
 
     public boolean shouldDie() {
-        return this.age == 8;
+        return this.age - lastMeal >= 8;
     }
 }

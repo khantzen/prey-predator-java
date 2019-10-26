@@ -210,4 +210,43 @@ public class FoxMigrationTest {
 
         Assertions.assertThat(world.totalFoxPopulation()).isEqualTo(0);
     }
+
+    @Test
+    public void eating_rabbit_should_allow_fox_to_live_longer() {
+        var mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(0, 0)
+                );
+
+        var mockedRandomGenerator = new MockOnlyZeroRandomGenerator();
+
+        World world = new World.Builder()
+                .totalLine(1)
+                .totalColumn(2)
+                .baseRabbitCount(0)
+                .baseFoxCount(1)
+                .coordGenerator(mockedCoordGenerator)
+                .foxMigration(new SpecieMigration(mockedRandomGenerator))
+                .build();
+
+        for (int i = 0; i < 8; i++) {
+            world.migrateFoxes();
+        }
+
+        Territory territory = world.territoryAt(Coord.of(0, 0));
+        territory.addRabbit(Rabbit.newBorn());
+        territory.startHunt();
+
+        for (int i = 0; i < 5; i++) {
+            world.migrateFoxes();
+        }
+
+        Assertions.assertThat(world.totalFoxPopulation()).isEqualTo(1);
+
+        for (int i = 0; i < 10; i++) {
+            world.migrateFoxes();
+        }
+
+        Assertions.assertThat(world.totalFoxPopulation()).isEqualTo(0);
+    }
 }
