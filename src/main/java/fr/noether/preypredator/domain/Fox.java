@@ -10,7 +10,7 @@ public class Fox implements Specie {
 
     private Fox(int age, boolean isFed, int lastMeal) {
         this.age = age;
-        this.isFed = isFed;
+        this.isFed = age - lastMeal < HUNGRY_STATE;
         this.lastMeal = lastMeal;
     }
 
