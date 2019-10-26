@@ -1,0 +1,57 @@
+package fr.noether.preypredator.domain;
+
+import fr.noether.preypredator.util.MockCoordGenerator;
+import fr.noether.preypredator.util.MockRandomGenerator;
+import fr.noether.preypredator.util.MockRandomGeneratorOnly0;
+import org.assertj.core.api.Assertions;
+import org.junit.Ignore;
+import org.junit.Test;
+
+public class WorldLifeCycleTest {
+
+    @Test
+    public void rabbit_should_met_and_reproduce() {
+        var mockedCoordGenerator =
+                new MockCoordGenerator(
+                        Coord.of(0, 0),
+                        Coord.of(0, 2)
+                );
+
+        Migration migration = new SpecieMigration(
+                new MockRandomGeneratorOnly0()
+        );
+
+        var world = new World.Builder()
+                .baseFoxCount(0)
+                .baseRabbitCount(2)
+                .totalLine(1)
+                .totalColumn(3)
+                .coordGenerator(mockedCoordGenerator)
+                .foxMigration(migration)
+                .rabbitMigration(migration)
+                .coordGenerator(mockedCoordGenerator)
+                .build();
+
+        launchCycle(4, world);
+
+        Assertions.assertThat(world.totalRabbitPopulation()).isEqualTo(3);
+    }
+
+    private void launchCycle(int cycle, World world) {
+        for (int i = 0; i < cycle; i++) {
+            world.lifeHappen();
+        }
+    }
+
+    @Test
+    @Ignore
+    public void fox_should_met_and_reproduce() {
+
+    }
+
+    @Test
+    @Ignore
+    public void fox_and_rabbit_should_met_start_an_hunt_and_reproduce() {
+
+    }
+}

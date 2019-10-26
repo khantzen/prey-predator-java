@@ -66,12 +66,12 @@ public class Territory {
 
     public void endFoxMigration() {
         this.foxes = new ArrayList<>(this.migratingFoxes);
-        migratingFoxes = Collections.emptyList();
+        migratingFoxes = new ArrayList<>();
     }
 
     public void endRabbitMigration() {
         this.rabbits = new ArrayList<>(this.migratingRabbit);
-        this.migratingRabbit = Collections.emptyList();
+        this.migratingRabbit = new ArrayList<>();
     }
 
     public boolean isOccupied() {
@@ -101,5 +101,9 @@ public class Territory {
 
         for (int i = 0; i < newBornFoxCount; i++)
             this.foxes.add(Fox.newBorn());
+    }
+
+    boolean containsRabbit() {
+        return totalRabbit() != 0;
     }
 }

@@ -66,6 +66,8 @@ public class World {
         migrateFoxes();
         migrateRabbits();
         startHunt();
+        filterTerritories(Territory::containsRabbit)
+                .forEach(Territory::startRabbitReproduction);
     }
 
     public void startHunt() {
@@ -80,7 +82,7 @@ public class World {
     }
 
     public void migrateRabbits() {
-        Predicate<? super Territory> byRabbit = t -> t.totalRabbit() != 0;
+        Predicate<? super Territory> byRabbit = t -> t.containsRabbit();
         migrateSpecie(byRabbit, this::migrateRabbitFrom);
         territories.forEach(Territory::endRabbitMigration);
     }
@@ -105,7 +107,7 @@ public class World {
 
     private void migrateRabbitFrom(Territory territory) {
         var adjacentPosition = territory.adjacentCoord(totalLine, totalColumn);
-        while (territory.totalRabbit() != 0) {
+        while (territory.containsRabbit()) {
             Rabbit selectedRabbit = territory.removeRabbit();
             selectedRabbit = selectedRabbit.incrementAge();
             var destination = this.rabbitMigration
@@ -118,6 +120,12 @@ public class World {
         Predicate<Territory> byWantedPosition = t -> t.position.equals(wantedPosition);
         var territoriesAtPosition = filterTerritories(byWantedPosition);
         return territoriesAtPosition.get(0);
+    }
+
+    public long totalRabbitPopulation() {
+        return filterTerritories(Territory::containsRabbit).stream()
+                .map(Territory::totalRabbit)
+                .reduce(0, Integer::sum);
     }
 
     private List<Territory> filterTerritories(Predicate<? super Territory> byPredicate) {

@@ -5,6 +5,7 @@ import fr.noether.preypredator.util.MockCoordGenerator;
 import fr.noether.preypredator.util.MockRandomGenerator;
 import fr.noether.preypredator.util.RandomGenerator;
 import org.assertj.core.api.Assertions;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class FoxMigrationTest {
@@ -127,4 +128,15 @@ public class FoxMigrationTest {
         Assertions.assertThat(territoryL0C1.totalFox()).isEqualTo(2);
     }
 
+    @Test
+    @Ignore
+    public void fox_age_should_increment_when_migrating() {
+
+    }
+
+    @Test
+    @Ignore
+    public void fox_should_die_when_they_didnt_eat_at_least_one_time_in_5_migration() {
+
+    }
 }
