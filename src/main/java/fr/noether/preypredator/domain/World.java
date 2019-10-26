@@ -107,7 +107,11 @@ public class World {
             Fox fox = territory.removeFox();
 
             var destination = this.foxMigration
-                    .nextCoord(adjacentCoords, territory.position, territories);
+                    .nextCoord(
+                            adjacentCoords,
+                            territory.position,
+                            territories
+                    );
 
             territoryAt(destination).addFoxToMigration(fox.incrementFoxAge());
         }
@@ -116,11 +120,16 @@ public class World {
     private void migrateRabbitFrom(Territory territory) {
         var adjacentPosition = territory.adjacentCoord(totalLine, totalColumn);
         while (territory.containsRabbits()) {
-            Rabbit selectedRabbit = territory.removeRabbit();
-            selectedRabbit = selectedRabbit.incrementAge();
+            Rabbit rabbit = territory.removeRabbit();
+
             var destination = this.rabbitMigration
-                    .nextCoord(adjacentPosition, territory.position, territories);
-            territoryAt(destination).addRabbitMigration(selectedRabbit);
+                    .nextCoord(
+                            adjacentPosition,
+                            territory.position,
+                            territories
+                    );
+
+            territoryAt(destination).addRabbitMigration(rabbit.incrementAge());
         }
     }
 
