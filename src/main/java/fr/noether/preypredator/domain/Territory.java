@@ -87,7 +87,7 @@ public class Territory {
 
     public void startRabbitReproduction() {
         if (this.foxes.size() == 0) {
-            var rabbitCouple = countSpecieCouple(new ArrayList<>(this.rabbits));
+            var rabbitCouple = Reproduction.countSpecieCouple(new ArrayList<>(this.rabbits));
 
             for (int i = 0; i < rabbitCouple; i++) {
                 this.rabbits.add(Rabbit.newBorn());
@@ -96,19 +96,11 @@ public class Territory {
     }
 
     public void startFoxReproduction() {
-        long foxCouple = countSpecieCouple(new ArrayList<>(this.foxes));
+        long foxCouple = Reproduction.countSpecieCouple(new ArrayList<>(this.foxes));
 
         for (int i = 0; i < foxCouple; i++)
             this.foxes.add(Fox.newBorn());
     }
 
-    private long countSpecieCouple(List<Specie> species) {
-        Predicate<Specie> byReproductionAbility = Specie::canBreed;
 
-        var individualThatCanReproduce = species.stream()
-                .filter(byReproductionAbility)
-                .count();
-
-        return individualThatCanReproduce / 2;
-    }
 }
