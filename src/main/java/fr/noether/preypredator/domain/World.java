@@ -65,13 +65,8 @@ public class World {
     public void lifeHappen() {
         migrateFoxes();
         migrateRabbits();
-        filterTerritories(Territory::containsRabbit)
-                .forEach(Territory::startRabbitReproduction);
-
-        filterTerritories(Territory::containFoxes)
-                .forEach(Territory::startFoxReproduction);
-
-
+        launchSpecieReproduction(Territory::containsRabbit, Territory::startRabbitReproduction);
+        launchSpecieReproduction(Territory::containFoxes, Territory::startFoxReproduction);
     }
 
     public void startHunt() {
@@ -80,15 +75,18 @@ public class World {
     }
 
     public void migrateFoxes() {
-        Predicate<? super Territory> byFox = t -> t.containFoxes();
-        migrateSpecie(byFox, this::migrateFoxesFrom);
+        migrateSpecie(Territory::containFoxes, this::migrateFoxesFrom);
         territories.forEach(Territory::endFoxMigration);
     }
 
     public void migrateRabbits() {
-        Predicate<? super Territory> byRabbit = t -> t.containsRabbit();
-        migrateSpecie(byRabbit, this::migrateRabbitFrom);
+        migrateSpecie(Territory::containsRabbit, this::migrateRabbitFrom);
         territories.forEach(Territory::endRabbitMigration);
+    }
+
+    private void launchSpecieReproduction(Predicate<Territory> specieFiltering, Consumer<Territory> launchReproduction) {
+        filterTerritories(specieFiltering)
+                .forEach(launchReproduction);
     }
 
     private void migrateSpecie(
