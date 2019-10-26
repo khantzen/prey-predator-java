@@ -87,18 +87,20 @@ public class Territory {
 
     public void startRabbitReproduction() {
         if (this.foxes.size() == 0) {
-            var rabbitCouple = Reproduction.countSpecieCouple(new ArrayList<>(this.rabbits));
+            var newBornRabbitCount =
+                    Reproduction.countSpecieCouple(new ArrayList<>(this.rabbits));
 
-            for (int i = 0; i < rabbitCouple; i++) {
+            for (int i = 0; i < newBornRabbitCount; i++) {
                 this.rabbits.add(Rabbit.newBorn());
             }
         }
     }
 
     public void startFoxReproduction() {
-        long foxCouple = Reproduction.countSpecieCouple(new ArrayList<>(this.foxes));
+        long newBornFoxCount =
+                Reproduction.countSpecieCouple(new ArrayList<>(this.foxes));
 
-        for (int i = 0; i < foxCouple; i++)
+        for (int i = 0; i < newBornFoxCount; i++)
             this.foxes.add(Fox.newBorn());
     }
 
