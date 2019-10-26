@@ -43,7 +43,6 @@ public class WorldLifeCycleTest {
     }
 
     @Test
-    @Ignore
     public void fox_should_met_and_reproduce() {
         var mockedCoordGenerator =
                 new MockCoordGenerator(
