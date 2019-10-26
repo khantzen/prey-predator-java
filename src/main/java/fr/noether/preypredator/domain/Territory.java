@@ -100,7 +100,6 @@ public class Territory {
     }
 
     public void startFoxReproduction() {
-        int foxCouple = foxCount / 2;
-        foxCount += foxCouple;
+        foxCount += foxCount / 2;
     }
 }
