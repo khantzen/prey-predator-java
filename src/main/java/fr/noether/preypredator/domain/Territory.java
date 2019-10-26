@@ -51,29 +51,29 @@ public class Territory {
     }
 
 
-    public List<Coord> adjacentCoord(int totalLine, int totalColumn) {
+    List<Coord> adjacentCoord(int totalLine, int totalColumn) {
         return this.position.adjacent(totalLine, totalColumn);
     }
 
-    public void addFoxToMigration(Fox fox) {
+    void addFoxToMigration(Fox fox) {
         this.migratingFoxes.add(fox);
     }
 
-    public void addRabbitMigration(Rabbit rabbit) {
+    void addRabbitMigration(Rabbit rabbit) {
         this.migratingRabbit.add(rabbit);
     }
 
-    public void endFoxMigration() {
+    void endFoxMigration() {
         this.foxes = new ArrayList<>(this.migratingFoxes);
         migratingFoxes = new ArrayList<>();
     }
 
-    public void endRabbitMigration() {
+    void endRabbitMigration() {
         this.rabbits = new ArrayList<>(this.migratingRabbit);
         this.migratingRabbit = new ArrayList<>();
     }
 
-    public boolean isOccupied() {
+    boolean isOccupied() {
         return this.rabbits.size() != 0 || this.totalFox() != 0;
     }
 
