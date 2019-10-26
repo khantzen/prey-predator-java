@@ -47,6 +47,7 @@ function lastCommitRed(){
 
 # revert to the last version that was committed
 function revert() {
+    git status
     git reset --hard
 }
 
