@@ -100,6 +100,10 @@ public class Territory {
     }
 
     public void startFoxReproduction() {
-        this.foxCount++;
+        if (this.foxCount == 2) {
+            this.foxCount++;
+        } else {
+            this.foxCount = 6;
+        }
     }
 }
