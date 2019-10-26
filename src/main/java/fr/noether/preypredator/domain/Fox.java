@@ -15,7 +15,7 @@ public class Fox implements Specie {
         return new Fox(true);
     }
 
-    public boolean canBreed() {
+    public boolean canReproduce() {
         return this.isFed;
     }
 }

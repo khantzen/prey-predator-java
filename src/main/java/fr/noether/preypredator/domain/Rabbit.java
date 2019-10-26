@@ -17,7 +17,7 @@ public class Rabbit implements Specie {
         return new Rabbit(age);
     }
 
-    public boolean canBreed() {
+    public boolean canReproduce() {
         return this.age > MAJORITY;
     }
 
