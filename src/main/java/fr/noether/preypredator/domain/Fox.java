@@ -18,6 +18,10 @@ public class Fox implements Specie {
         return new Fox(0, true);
     }
 
+    Fox incrementFoxAge() {
+        return withAge(age + 1);
+    }
+
     public static Fox hungry() {
         return new Fox(5, false);
     }
@@ -25,5 +29,4 @@ public class Fox implements Specie {
     public boolean canReproduce() {
         return this.isFed && this.age > MAJORITY;
     }
-
 }

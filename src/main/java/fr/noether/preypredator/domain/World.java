@@ -105,7 +105,7 @@ public class World {
         var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
         while (territory.containFoxes()) {
             Fox fox = territory.removeFox();
-            fox = Fox.withAge(fox.age + 1);
+            fox = fox.incrementFoxAge();
 
             var destination = this.foxMigration
                     .nextCoord(adjacentCoords, territory.position, territories);
