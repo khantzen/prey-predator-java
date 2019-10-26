@@ -7,28 +7,22 @@ public class FoxReproductionTest {
 
     @Test
     public void two_foxes_should_produce_one_fox() {
-        Territory territory = buildTerritoryWith(2);
-
+        var territory = buildTerritoryWith(2);
         territory.startFoxReproduction();
-
         Assertions.assertThat(territory.totalFox()).isEqualTo(3);
     }
 
     @Test
     public void four_foxes_should_produce_two_foxes() {
-        Territory territory = buildTerritoryWith(4);
-
+        var territory = buildTerritoryWith(4);
         territory.startFoxReproduction();
-
         Assertions.assertThat(territory.totalFox()).isEqualTo(6);
     }
 
     @Test
     public void three_foxes_should_produces_one_fox() {
-        Territory territory = buildTerritoryWith(3);
-
+        var territory = buildTerritoryWith(3);
         territory.startFoxReproduction();
-
         Assertions.assertThat(territory.totalFox()).isEqualTo(4);
     }
 
