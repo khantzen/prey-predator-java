@@ -1,7 +1,7 @@
 package fr.noether.preypredator.domain.area;
 
-import fr.noether.preypredator.domain.specie.Fox;
 import fr.noether.preypredator.domain.life.Migration;
+import fr.noether.preypredator.domain.specie.Fox;
 import fr.noether.preypredator.domain.specie.Rabbit;
 import fr.noether.preypredator.util.CoordGenerator;
 
@@ -11,8 +11,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
-
-import static java.util.stream.Collectors.toList;
+import java.util.stream.Stream;
 
 public class World {
     private final int totalLine;
@@ -143,9 +142,9 @@ public class World {
 
     public Territory territoryAt(Coord wantedPosition) {
         Predicate<Territory> byWantedPosition = t -> t.position.equals(wantedPosition);
-        var territoriesAtPosition = filterTerritories(byWantedPosition);
-        assert territoriesAtPosition.size() == 1;
-        return territoriesAtPosition.get(0);
+        return filterTerritories(byWantedPosition)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public long totalRabbitPopulation() {
@@ -166,7 +165,7 @@ public class World {
             Predicate<Territory> specieFilter,
             Function<Territory, Integer> specieCount
     ) {
-        return filterTerritories(specieFilter).stream()
+        return filterTerritories(specieFilter)
                 .map(specieCount)
                 .map(Integer::longValue)
                 .reduce(0L, Long::sum);
@@ -182,10 +181,9 @@ public class World {
         territoryAt(position).addFox(Fox.newBorn());
     }
 
-    private List<Territory> filterTerritories(Predicate<? super Territory> byPredicate) {
+    private Stream<Territory> filterTerritories(Predicate<? super Territory> byPredicate) {
         return territories.stream()
-                .filter(byPredicate)
-                .collect(toList());
+                .filter(byPredicate);
     }
 
     public static class Builder {
