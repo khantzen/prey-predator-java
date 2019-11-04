@@ -1,5 +1,7 @@
 package fr.noether.preypredator.domain;
 
+import fr.noether.preypredator.domain.area.World;
+import fr.noether.preypredator.domain.life.SpecieMigration;
 import fr.noether.preypredator.util.CoordGenerator;
 import fr.noether.preypredator.util.RandomCoordGenerator;
 import fr.noether.preypredator.util.RandomGenerator;
@@ -21,9 +23,8 @@ public class Simulation {
         int totalColumn = 5;
         int startingRabbitCount = 5;
         int startingFoxCount = 5;
-        long rngSeed = 12345L;
 
-        RandomGenerator randomGenerator = new Randomizer(rngSeed);
+        RandomGenerator randomGenerator = new Randomizer();
 
         SpecieMigration foxMigration = new SpecieMigration(randomGenerator);
         SpecieMigration rabbitMigration = new SpecieMigration(randomGenerator);

@@ -1,15 +1,16 @@
 package fr.noether.preypredator.util;
 
-import fr.noether.preypredator.domain.Coord;
+import fr.noether.preypredator.domain.area.Coord;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 
 public class Randomizer implements RandomGenerator {
     private final Random random;
 
-    public Randomizer(long seed) {
-        this.random = new Random(seed);
+    public Randomizer() {
+        this.random = new SecureRandom();
     }
 
     @Override

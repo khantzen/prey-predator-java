@@ -1,8 +1,7 @@
 package fr.noether.preypredator.util;
 
-import fr.noether.preypredator.domain.Coord;
+import fr.noether.preypredator.domain.area.Coord;
 
-import java.util.Collection;
 import java.util.List;
 
 public class MockParametrizedRandomGenerator implements RandomGenerator {

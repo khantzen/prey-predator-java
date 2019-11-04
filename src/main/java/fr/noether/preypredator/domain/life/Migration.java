@@ -1,4 +1,7 @@
-package fr.noether.preypredator.domain;
+package fr.noether.preypredator.domain.life;
+
+import fr.noether.preypredator.domain.area.Coord;
+import fr.noether.preypredator.domain.area.Territory;
 
 import java.util.List;
 

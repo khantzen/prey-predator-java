@@ -1,4 +1,4 @@
-package fr.noether.preypredator.domain;
+package fr.noether.preypredator.domain.specie;
 
 public class Fox implements Specie {
     private static int MAJORITY = 3;
@@ -18,11 +18,11 @@ public class Fox implements Specie {
         return new Fox(age, age);
     }
 
-    static Fox newBorn() {
+    public static Fox newBorn() {
         return new Fox(0, 0);
     }
 
-    Fox incrementFoxAge() {
+    public Fox incrementFoxAge() {
         if (age - lastMeal >= HUNGRY_STATE) {
             return new Fox(age + 1, lastMeal);
         }
@@ -37,11 +37,11 @@ public class Fox implements Specie {
         return this.isFed && this.age > MAJORITY;
     }
 
-    Fox feed() {
+    public Fox feed() {
         return new Fox(this.age, this.age);
     }
 
-    boolean shouldDie() {
+    public boolean shouldDie() {
         return this.age - lastMeal >= 8;
     }
 }

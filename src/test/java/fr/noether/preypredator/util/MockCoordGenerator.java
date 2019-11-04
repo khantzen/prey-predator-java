@@ -1,6 +1,6 @@
 package fr.noether.preypredator.util;
 
-import fr.noether.preypredator.domain.Coord;
+import fr.noether.preypredator.domain.area.Coord;
 
 public class MockCoordGenerator implements CoordGenerator {
     private final Coord[] coords;

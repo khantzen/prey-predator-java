@@ -1,9 +1,8 @@
-package fr.noether.preypredator.domain;
+package fr.noether.preypredator.domain.area;
 
+import fr.noether.preypredator.domain.area.Coord;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
-
-import java.util.List;
 
 public class AdjacentCoordTest {
 

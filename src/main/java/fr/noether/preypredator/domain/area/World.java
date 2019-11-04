@@ -1,5 +1,8 @@
-package fr.noether.preypredator.domain;
+package fr.noether.preypredator.domain.area;
 
+import fr.noether.preypredator.domain.specie.Fox;
+import fr.noether.preypredator.domain.life.Migration;
+import fr.noether.preypredator.domain.specie.Rabbit;
 import fr.noether.preypredator.util.CoordGenerator;
 
 import java.util.ArrayList;
@@ -73,17 +76,17 @@ public class World {
         launchSpecieReproduction(Territory::containFoxes, Territory::startFoxReproduction);
     }
 
-    void startHunt() {
+    public void startHunt() {
         var occupiedTerritories = this.filterTerritories(Territory::isOccupied);
         occupiedTerritories.forEach(Territory::startHunt);
     }
 
-    void migrateFoxes() {
+    public void migrateFoxes() {
         migrateSpecie(Territory::containFoxes, this::migrateFoxesFrom);
         territories.forEach(Territory::endFoxMigration);
     }
 
-    void migrateRabbits() {
+    public void migrateRabbits() {
         migrateSpecie(Territory::containsRabbits, this::migrateRabbitFrom);
         territories.forEach(Territory::endRabbitMigration);
     }
@@ -138,7 +141,7 @@ public class World {
         }
     }
 
-    Territory territoryAt(Coord wantedPosition) {
+    public Territory territoryAt(Coord wantedPosition) {
         Predicate<Territory> byWantedPosition = t -> t.position.equals(wantedPosition);
         var territoriesAtPosition = filterTerritories(byWantedPosition);
         assert territoriesAtPosition.size() == 1;

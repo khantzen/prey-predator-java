@@ -1,4 +1,8 @@
-package fr.noether.preypredator.domain;
+package fr.noether.preypredator.domain.area;
+
+import fr.noether.preypredator.domain.life.Reproduction;
+import fr.noether.preypredator.domain.specie.Fox;
+import fr.noether.preypredator.domain.specie.Rabbit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +24,7 @@ public class Territory {
         this.migratingFoxes = new ArrayList<>();
     }
 
-    static Territory at(Coord coord) {
+    public static Territory at(Coord coord) {
         return new Territory(coord);
     }
 
@@ -77,7 +81,7 @@ public class Territory {
         return this.rabbits.size() != 0 || this.totalFox() != 0;
     }
 
-    void startHunt() {
+    public void startHunt() {
         int rabbitToRemove = Math.min(totalFox(), totalRabbit());
         for (int i = 0; i < rabbitToRemove; i++) {
             removeRabbit();

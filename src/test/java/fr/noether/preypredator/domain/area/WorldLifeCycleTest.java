@@ -1,5 +1,9 @@
-package fr.noether.preypredator.domain;
+package fr.noether.preypredator.domain.area;
 
+import fr.noether.preypredator.domain.area.Coord;
+import fr.noether.preypredator.domain.area.World;
+import fr.noether.preypredator.domain.life.Migration;
+import fr.noether.preypredator.domain.life.SpecieMigration;
 import fr.noether.preypredator.util.MockCoordGenerator;
 import fr.noether.preypredator.util.MockOnlyZeroRandomGenerator;
 import org.assertj.core.api.Assertions;

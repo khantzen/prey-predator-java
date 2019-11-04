@@ -1,4 +1,4 @@
-package fr.noether.preypredator.domain;
+package fr.noether.preypredator.domain.specie;
 
 public class Rabbit implements Specie {
     private static int MAJORITY = 3;
@@ -21,7 +21,7 @@ public class Rabbit implements Specie {
         return this.age > MAJORITY;
     }
 
-    Rabbit incrementAge() {
+    public Rabbit incrementAge() {
         return Rabbit.withAge(this.age + 1);
     }
 }

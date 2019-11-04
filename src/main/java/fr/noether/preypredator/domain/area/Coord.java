@@ -1,8 +1,7 @@
-package fr.noether.preypredator.domain;
+package fr.noether.preypredator.domain.area;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Coord {
     private final int line;

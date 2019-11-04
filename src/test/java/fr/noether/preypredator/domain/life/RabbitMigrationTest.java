@@ -1,5 +1,10 @@
-package fr.noether.preypredator.domain;
+package fr.noether.preypredator.domain.life;
 
+import fr.noether.preypredator.domain.area.Coord;
+import fr.noether.preypredator.domain.area.Territory;
+import fr.noether.preypredator.domain.area.World;
+import fr.noether.preypredator.domain.life.SpecieMigration;
+import fr.noether.preypredator.domain.specie.Rabbit;
 import fr.noether.preypredator.util.CoordGenerator;
 import fr.noether.preypredator.util.MockCoordGenerator;
 import fr.noether.preypredator.util.MockParametrizedRandomGenerator;

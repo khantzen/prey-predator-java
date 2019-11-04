@@ -1,5 +1,9 @@
-package fr.noether.preypredator.domain;
+package fr.noether.preypredator.domain.life;
 
+import fr.noether.preypredator.domain.area.Coord;
+import fr.noether.preypredator.domain.area.Territory;
+import fr.noether.preypredator.domain.specie.Fox;
+import fr.noether.preypredator.domain.specie.Rabbit;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
