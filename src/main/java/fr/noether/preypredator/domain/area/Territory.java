@@ -113,7 +113,7 @@ public class Territory {
         return totalRabbit() != 0;
     }
 
-    boolean containFoxes() {
+    boolean containsFoxes() {
         return totalFox() != 0;
     }
 }

@@ -72,7 +72,7 @@ public class World {
         migrateRabbits();
         startHunt();
         launchSpecieReproduction(Territory::containsRabbits, Territory::startRabbitReproduction);
-        launchSpecieReproduction(Territory::containFoxes, Territory::startFoxReproduction);
+        launchSpecieReproduction(Territory::containsFoxes, Territory::startFoxReproduction);
     }
 
     public void startHunt() {
@@ -81,7 +81,7 @@ public class World {
     }
 
     public void migrateFoxes() {
-        migrateSpecie(Territory::containFoxes, this::migrateFoxesFrom);
+        migrateSpecie(Territory::containsFoxes, this::migrateFoxesFrom);
         territories.forEach(Territory::endFoxMigration);
     }
 
@@ -91,10 +91,10 @@ public class World {
     }
 
     private void launchSpecieReproduction(
-            Predicate<Territory> specieFiltering,
+            Predicate<Territory> bySpecie,
             Consumer<Territory> launchReproduction
     ) {
-        filterTerritories(specieFiltering)
+        filterTerritories(bySpecie)
                 .forEach(launchReproduction);
     }
 
@@ -108,7 +108,7 @@ public class World {
 
     private void migrateFoxesFrom(Territory territory) {
         var adjacentCoords = territory.adjacentCoord(totalLine, totalColumn);
-        while (territory.containFoxes()) {
+        while (territory.containsFoxes()) {
             Fox fox = territory.removeFox();
 
             var destination = this.foxMigration
@@ -159,7 +159,7 @@ public class World {
 
     public long totalFoxPopulation() {
         return totalSpeciePopulation(
-                Territory::containFoxes,
+                Territory::containsFoxes,
                 Territory::totalFox
         );
     }
