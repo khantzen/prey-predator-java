@@ -1,7 +1,5 @@
 package fr.noether.preypredator.domain.area;
 
-import fr.noether.preypredator.domain.area.Coord;
-import fr.noether.preypredator.domain.area.World;
 import fr.noether.preypredator.domain.life.Migration;
 import fr.noether.preypredator.domain.life.SpecieMigration;
 import fr.noether.preypredator.util.MockCoordGenerator;
@@ -9,7 +7,7 @@ import fr.noether.preypredator.util.MockOnlyZeroRandomGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-public class WorldLifeCycleTest {
+public class ForestLifeCycleTest {
 
     @Test
     public void rabbit_should_met_and_reproduce() {
@@ -23,7 +21,7 @@ public class WorldLifeCycleTest {
                 new MockOnlyZeroRandomGenerator()
         );
 
-        var world = new World.Builder()
+        var forest = new Forest.Builder()
                 .baseFoxCount(0)
                 .baseRabbitCount(2)
                 .totalLine(1)
@@ -34,9 +32,9 @@ public class WorldLifeCycleTest {
                 .coordGenerator(mockedCoordGenerator)
                 .build();
 
-        launchCycle(4, world);
+        launchCycle(4, forest);
 
-        Assertions.assertThat(world.totalRabbitPopulation()).isEqualTo(3);
+        Assertions.assertThat(forest.totalRabbitPopulation()).isEqualTo(3);
     }
 
     @Test
@@ -51,7 +49,7 @@ public class WorldLifeCycleTest {
                 new MockOnlyZeroRandomGenerator()
         );
 
-        var world = new World.Builder()
+        var forest = new Forest.Builder()
                 .baseFoxCount(2)
                 .baseRabbitCount(0)
                 .totalLine(1)
@@ -62,14 +60,14 @@ public class WorldLifeCycleTest {
                 .coordGenerator(mockedCoordGenerator)
                 .build();
 
-        launchCycle(4, world);
+        launchCycle(4, forest);
 
-        Assertions.assertThat(world.totalFoxPopulation()).isEqualTo(3);
+        Assertions.assertThat(forest.totalFoxPopulation()).isEqualTo(3);
     }
 
-    private void launchCycle(int cycle, World world) {
+    private void launchCycle(int cycle, Forest forest) {
         for (int i = 0; i < cycle; i++) {
-            world.launchCycle();
+            forest.launchCycle();
         }
     }
 
@@ -86,7 +84,7 @@ public class WorldLifeCycleTest {
                 new MockOnlyZeroRandomGenerator()
         );
 
-        var world = new World.Builder()
+        var forest = new Forest.Builder()
                 .baseFoxCount(2)
                 .baseRabbitCount(1)
                 .totalLine(1)
@@ -97,9 +95,9 @@ public class WorldLifeCycleTest {
                 .coordGenerator(mockedCoordGenerator)
                 .build();
 
-        launchCycle(4, world);
+        launchCycle(4, forest);
 
-        Assertions.assertThat(world.totalFoxPopulation()).isEqualTo(3);
-        Assertions.assertThat(world.totalRabbitPopulation()).isEqualTo(0);
+        Assertions.assertThat(forest.totalFoxPopulation()).isEqualTo(3);
+        Assertions.assertThat(forest.totalRabbitPopulation()).isEqualTo(0);
     }
 }

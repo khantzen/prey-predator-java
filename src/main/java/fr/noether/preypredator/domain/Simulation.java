@@ -1,6 +1,6 @@
 package fr.noether.preypredator.domain;
 
-import fr.noether.preypredator.domain.area.World;
+import fr.noether.preypredator.domain.area.Forest;
 import fr.noether.preypredator.domain.life.SpecieMigration;
 import fr.noether.preypredator.util.CoordGenerator;
 import fr.noether.preypredator.util.RandomCoordGenerator;
@@ -10,11 +10,11 @@ import fr.noether.preypredator.util.Randomizer;
 import java.util.Scanner;
 
 public class Simulation {
-    private final World world;
+    private final Forest forest;
     private final Scanner input;
 
-    private Simulation(World world) {
-        this.world = world;
+    private Simulation(Forest forest) {
+        this.forest = forest;
         this.input = new Scanner(System.in);
     }
 
@@ -36,7 +36,7 @@ public class Simulation {
                         randomGenerator
                 );
 
-        var world = new World.Builder()
+        var forest = new Forest.Builder()
                 .totalLine(totalLine)
                 .totalColumn(totalColumn)
 
@@ -50,14 +50,14 @@ public class Simulation {
 
                 .build();
 
-        return new Simulation(world);
+        return new Simulation(forest);
     }
 
     public void launch() {
         do {
-            world.launchCycle();
-            System.out.println("Rabbit count: " + world.totalRabbitPopulation());
-            System.out.println("Fox count: " + world.totalFoxPopulation());
+            forest.launchCycle();
+            System.out.println("Rabbit count: " + forest.totalRabbitPopulation());
+            System.out.println("Fox count: " + forest.totalFoxPopulation());
             this.editEcosystem();
         } while (true);
     }
@@ -81,7 +81,7 @@ public class Simulation {
         } catch (NumberFormatException ignored) {}
 
         for (int i = 0; i < rabbitToAdd; i++) {
-            this.world.spawnDivinelyANewBornRabbit();
+            this.forest.spawnDivinelyANewBornRabbit();
         }
     }
 
@@ -94,7 +94,7 @@ public class Simulation {
         } catch (NumberFormatException ignored) {}
 
         for (int i = 0; i < foxToAdd; i++) {
-            this.world.spawnDivinelyANewBornFox();
+            this.forest.spawnDivinelyANewBornFox();
         }
 
     }

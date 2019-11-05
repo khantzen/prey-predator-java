@@ -13,7 +13,7 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class World {
+public class Forest {
     private final int totalLine;
     private final int totalColumn;
 
@@ -24,15 +24,15 @@ public class World {
 
     private final CoordGenerator coordGenerator;
 
-    private World(Builder builder) {
+    private Forest(Builder builder) {
         this.totalLine = builder.totalLine;
         this.totalColumn = builder.totalColumn;
         this.foxMigration = builder.foxMigration;
         this.rabbitMigration = builder.rabbitMigration;
         this.territories = buildTerritories(builder.totalLine, builder.totalColumn);
         this.coordGenerator = builder.coordGenerator;
-        populateWorldWith(builder.baseRabbitCount, this.addRabbit());
-        populateWorldWith(builder.baseFoxCount, this.addFox());
+        populateForestWith(builder.baseRabbitCount, this.addRabbit());
+        populateForestWith(builder.baseFoxCount, this.addFox());
     }
 
     private static List<Territory> buildTerritories(int totalLine, int totalColumn) {
@@ -46,7 +46,7 @@ public class World {
         return territories;
     }
 
-    private void populateWorldWith(
+    private void populateForestWith(
             int populationCount,
             Consumer<Coord> populateMethod
     ) {
@@ -235,8 +235,8 @@ public class World {
             return this;
         }
 
-        public World build() {
-            return new World(this);
+        public Forest build() {
+            return new Forest(this);
         }
     }
 }

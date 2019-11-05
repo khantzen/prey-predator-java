@@ -1,31 +1,29 @@
 package fr.noether.preypredator.domain.area;
 
-import fr.noether.preypredator.domain.area.Coord;
-import fr.noether.preypredator.domain.area.World;
 import fr.noether.preypredator.util.CoordGenerator;
 import fr.noether.preypredator.util.MockCoordGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-public class WorldGenerationTest {
+public class ForestGenerationTest {
     @Test
     public void world_should_be_a_dimensioned_grid() {
-        assertWorldSize(10, 10, 100);
-        assertWorldSize(15, 10, 150);
+        assertForestSize(10, 10, 100);
+        assertForestSize(15, 10, 150);
     }
 
-    private void assertWorldSize(int line, int column, int expectedSize) {
-        var world = new World.Builder()
+    private void assertForestSize(int line, int column, int expectedSize) {
+        var forest = new Forest.Builder()
                 .totalLine(line)
                 .totalColumn(column)
                 .build();
 
-        Assertions.assertThat(world.size()).isEqualTo(expectedSize);
+        Assertions.assertThat(forest.size()).isEqualTo(expectedSize);
     }
 
     @Test
     public void world_should_be_able_to_give_a_territory_according_to_its_position() {
-        var world = new World.Builder()
+        var world = new Forest.Builder()
                 .totalLine(10)
                 .totalColumn(10)
                 .build();
@@ -52,7 +50,7 @@ public class WorldGenerationTest {
                         Coord.of(0, 0)
                         );
 
-        var world = new World.Builder()
+        var world = new Forest.Builder()
                 .totalLine(3)
                 .totalColumn(3)
                 .baseRabbitCount(3)
@@ -75,7 +73,7 @@ public class WorldGenerationTest {
                         Coord.of(0, 0)
                 );
 
-        var world = new World.Builder()
+        var world = new Forest.Builder()
                 .totalLine(3)
                 .totalColumn(3)
                 .baseRabbitCount(0)

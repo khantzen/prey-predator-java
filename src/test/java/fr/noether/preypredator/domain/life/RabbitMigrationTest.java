@@ -2,12 +2,9 @@ package fr.noether.preypredator.domain.life;
 
 import fr.noether.preypredator.domain.area.Coord;
 import fr.noether.preypredator.domain.area.Territory;
-import fr.noether.preypredator.domain.area.World;
+import fr.noether.preypredator.domain.area.Forest;
 import fr.noether.preypredator.domain.specie.Rabbit;
-import fr.noether.preypredator.util.CoordGenerator;
-import fr.noether.preypredator.util.MockCoordGenerator;
-import fr.noether.preypredator.util.MockParametrizedRandomGenerator;
-import fr.noether.preypredator.util.RandomGenerator;
+import fr.noether.preypredator.util.*;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
@@ -21,9 +18,9 @@ public class RabbitMigrationTest {
                 );
 
         RandomGenerator mockedRandomGenerator =
-                new MockParametrizedRandomGenerator(0, 0);
+                new MockOnlyZeroRandomGenerator();
 
-        World world = new World.Builder()
+        Forest forest = new Forest.Builder()
                 .totalLine(1)
                 .totalColumn(3)
                 .baseRabbitCount(1)
@@ -33,10 +30,10 @@ public class RabbitMigrationTest {
                 .rabbitMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
-        world.migrateRabbits();
+        forest.migrateRabbits();
 
-        Territory territoryL0C1 = world.territoryAt(Coord.of(0, 1));
-        Territory territoryL0C0 = world.territoryAt(Coord.of(0, 0));
+        Territory territoryL0C1 = forest.territoryAt(Coord.of(0, 1));
+        Territory territoryL0C0 = forest.territoryAt(Coord.of(0, 0));
 
         Assertions.assertThat(territoryL0C1.totalRabbit()).isEqualTo(1);
         Assertions.assertThat(territoryL0C0.totalRabbit()).isEqualTo(0);
@@ -55,7 +52,7 @@ public class RabbitMigrationTest {
         RandomGenerator mockedRandomGenerator =
                 new MockParametrizedRandomGenerator(0, 1, 2, 3);
 
-        World world = new World.Builder()
+        Forest forest = new Forest.Builder()
                 .totalLine(5)
                 .totalColumn(5)
                 .baseRabbitCount(4)
@@ -65,10 +62,10 @@ public class RabbitMigrationTest {
                 .rabbitMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
-        world.migrateRabbits();
-        var territoryL1C0 = world.territoryAt(Coord.of(1, 0));
-        var territoryL2C4 = world.territoryAt(Coord.of(2, 4));
-        var territoryL2C3 = world.territoryAt(Coord.of(2, 3));
+        forest.migrateRabbits();
+        var territoryL1C0 = forest.territoryAt(Coord.of(1, 0));
+        var territoryL2C4 = forest.territoryAt(Coord.of(2, 4));
+        var territoryL2C3 = forest.territoryAt(Coord.of(2, 3));
 
         Assertions.assertThat(territoryL1C0.totalRabbit()).isEqualTo(1);
         Assertions.assertThat(territoryL2C4.totalRabbit()).isEqualTo(0);
@@ -84,9 +81,9 @@ public class RabbitMigrationTest {
                         Coord.of(0, 1)
                 );
 
-        var mockedRandomGenerator = new MockParametrizedRandomGenerator(0, 0, 0, 0, 0);
+        var mockedRandomGenerator = new MockOnlyZeroRandomGenerator();
 
-        World world = new World.Builder()
+        Forest forest = new Forest.Builder()
                 .totalLine(1)
                 .totalColumn(2)
                 .baseRabbitCount(3)
@@ -96,10 +93,10 @@ public class RabbitMigrationTest {
                 .rabbitMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
-        world.migrateRabbits();
+        forest.migrateRabbits();
 
-        var territoryL0C0 = world.territoryAt(Coord.of(0,0));
-        var territoryL0C1 = world.territoryAt(Coord.of(0,1));
+        var territoryL0C0 = forest.territoryAt(Coord.of(0,0));
+        var territoryL0C1 = forest.territoryAt(Coord.of(0,1));
 
         Assertions.assertThat(territoryL0C0.totalRabbit()).isEqualTo(1);
         Assertions.assertThat(territoryL0C1.totalRabbit()).isEqualTo(2);
@@ -112,9 +109,9 @@ public class RabbitMigrationTest {
                         Coord.of(0, 0)
                 );
 
-        var mockedRandomGenerator = new MockParametrizedRandomGenerator(0, 0, 0, 0, 0);
+        var mockedRandomGenerator = new MockOnlyZeroRandomGenerator();
 
-        World world = new World.Builder()
+        Forest forest = new Forest.Builder()
                 .totalLine(1)
                 .totalColumn(2)
                 .baseRabbitCount(1)
@@ -124,9 +121,9 @@ public class RabbitMigrationTest {
                 .rabbitMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
-        world.migrateRabbits();
+        forest.migrateRabbits();
 
-        Territory territoryL0C1 = world.territoryAt(Coord.of(0, 1));
+        Territory territoryL0C1 = forest.territoryAt(Coord.of(0, 1));
         Rabbit rabbit = territoryL0C1.removeRabbit();
         Assertions.assertThat(rabbit.age).isEqualTo(1);
     }

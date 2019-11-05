@@ -2,7 +2,7 @@ package fr.noether.preypredator.domain.life;
 
 import fr.noether.preypredator.domain.area.Coord;
 import fr.noether.preypredator.domain.area.Territory;
-import fr.noether.preypredator.domain.area.World;
+import fr.noether.preypredator.domain.area.Forest;
 import fr.noether.preypredator.domain.specie.Fox;
 import fr.noether.preypredator.domain.specie.Rabbit;
 import fr.noether.preypredator.util.*;
@@ -20,9 +20,9 @@ public class FoxMigrationTest {
                 );
 
         RandomGenerator mockedRandomGenerator =
-                new MockParametrizedRandomGenerator(0, 0);
+                new MockOnlyZeroRandomGenerator();
 
-        World world = new World.Builder()
+        Forest forest = new Forest.Builder()
                 .totalLine(1)
                 .totalColumn(3)
                 .baseRabbitCount(0)
@@ -31,10 +31,10 @@ public class FoxMigrationTest {
                 .foxMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
-        world.migrateFoxes();
+        forest.migrateFoxes();
 
-        Territory territoryL0C1 = world.territoryAt(Coord.of(0, 1));
-        Territory territoryL0C0 = world.territoryAt(Coord.of(0, 0));
+        Territory territoryL0C1 = forest.territoryAt(Coord.of(0, 1));
+        Territory territoryL0C0 = forest.territoryAt(Coord.of(0, 0));
 
         Assertions.assertThat(territoryL0C1.totalFox()).isEqualTo(2);
         Assertions.assertThat(territoryL0C0.totalFox()).isEqualTo(0);
@@ -53,7 +53,7 @@ public class FoxMigrationTest {
         RandomGenerator mockedRandomGenerator =
                 new MockParametrizedRandomGenerator(0, 1, 2, 3);
 
-        World world = new World.Builder()
+        Forest forest = new Forest.Builder()
                 .totalLine(5)
                 .totalColumn(5)
                 .baseRabbitCount(0)
@@ -62,10 +62,10 @@ public class FoxMigrationTest {
                 .foxMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
-        world.migrateFoxes();
-        var territoryL1C0 = world.territoryAt(Coord.of(1, 0));
-        var territoryL2C4 = world.territoryAt(Coord.of(2, 4));
-        var territoryL2C3 = world.territoryAt(Coord.of(2, 3));
+        forest.migrateFoxes();
+        var territoryL1C0 = forest.territoryAt(Coord.of(1, 0));
+        var territoryL2C4 = forest.territoryAt(Coord.of(2, 4));
+        var territoryL2C3 = forest.territoryAt(Coord.of(2, 3));
 
         Assertions.assertThat(territoryL1C0.totalFox()).isEqualTo(1);
         Assertions.assertThat(territoryL2C4.totalFox()).isEqualTo(0);
@@ -83,9 +83,9 @@ public class FoxMigrationTest {
                         Coord.of(3, 3)
                 );
 
-        var mockedRandomGenerator = new MockParametrizedRandomGenerator(0, 0, 0, 0, 0);
+        var mockedRandomGenerator = new MockOnlyZeroRandomGenerator();
 
-        World world = new World.Builder()
+        Forest forest = new Forest.Builder()
                 .totalLine(5)
                 .totalColumn(5)
                 .baseRabbitCount(0)
@@ -94,9 +94,9 @@ public class FoxMigrationTest {
                 .foxMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
-        world.migrateFoxes();
+        forest.migrateFoxes();
 
-        var territoryL3C3 = world.territoryAt(Coord.of(3, 3));
+        var territoryL3C3 = forest.territoryAt(Coord.of(3, 3));
         Assertions.assertThat(territoryL3C3.totalFox()).isEqualTo(0);
     }
 
@@ -109,9 +109,9 @@ public class FoxMigrationTest {
                         Coord.of(0, 1)
                 );
 
-        var mockedRandomGenerator = new MockParametrizedRandomGenerator(0, 0, 0, 0, 0);
+        var mockedRandomGenerator = new MockOnlyZeroRandomGenerator();
 
-        World world = new World.Builder()
+        Forest forest = new Forest.Builder()
                 .totalLine(1)
                 .totalColumn(2)
                 .baseRabbitCount(0)
@@ -120,10 +120,10 @@ public class FoxMigrationTest {
                 .foxMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
-        world.migrateFoxes();
+        forest.migrateFoxes();
 
-        var territoryL0C0 = world.territoryAt(Coord.of(0, 0));
-        var territoryL0C1 = world.territoryAt(Coord.of(0, 1));
+        var territoryL0C0 = forest.territoryAt(Coord.of(0, 0));
+        var territoryL0C1 = forest.territoryAt(Coord.of(0, 1));
 
         Assertions.assertThat(territoryL0C0.totalFox()).isEqualTo(1);
         Assertions.assertThat(territoryL0C1.totalFox()).isEqualTo(2);
@@ -138,7 +138,7 @@ public class FoxMigrationTest {
 
         var mockedRandomGenerator = new MockOnlyZeroRandomGenerator();
 
-        World world = new World.Builder()
+        Forest forest = new Forest.Builder()
                 .totalLine(1)
                 .totalColumn(2)
                 .baseRabbitCount(0)
@@ -147,9 +147,9 @@ public class FoxMigrationTest {
                 .foxMigration(new SpecieMigration(mockedRandomGenerator))
                 .build();
 
-        world.migrateFoxes();
+        forest.migrateFoxes();
 
-        var territoryL0C1 = world.territoryAt(Coord.of(0, 1));
+        var territoryL0C1 = forest.territoryAt(Coord.of(0, 1));
 
         Fox fox = territoryL0C1.removeFox();
         Assertions.assertThat(fox.age).isEqualTo(1);
@@ -164,7 +164,7 @@ public class FoxMigrationTest {
 
         var mockedRandomGenerator = new MockOnlyZeroRandomGenerator();
 
-        World world = new World.Builder()
+        Forest forest = new Forest.Builder()
                 .totalLine(1)
                 .totalColumn(2)
                 .baseRabbitCount(0)
@@ -174,16 +174,16 @@ public class FoxMigrationTest {
                 .build();
 
         for (int i = 0; i < 4; i++) {
-            world.migrateFoxes();
+            forest.migrateFoxes();
         }
 
-        var territoryL0C0 = world.territoryAt(Coord.of(0, 0));
+        var territoryL0C0 = forest.territoryAt(Coord.of(0, 0));
         Fox fox = territoryL0C0.removeFox();
         Assertions.assertThat(fox.isFed).isTrue();
         territoryL0C0.addFox(fox);
 
         for (int i = 0; i < 2; i++) {
-            world.migrateFoxes();
+            forest.migrateFoxes();
         }
 
         fox = territoryL0C0.removeFox();
@@ -199,7 +199,7 @@ public class FoxMigrationTest {
 
         var mockedRandomGenerator = new MockOnlyZeroRandomGenerator();
 
-        World world = new World.Builder()
+        Forest forest = new Forest.Builder()
                 .totalLine(1)
                 .totalColumn(2)
                 .baseRabbitCount(0)
@@ -209,10 +209,10 @@ public class FoxMigrationTest {
                 .build();
 
         for (int i = 0; i < 9; i++) {
-            world.migrateFoxes();
+            forest.migrateFoxes();
         }
 
-        Assertions.assertThat(world.totalFoxPopulation()).isEqualTo(0);
+        Assertions.assertThat(forest.totalFoxPopulation()).isEqualTo(0);
     }
 
     @Test
@@ -224,7 +224,7 @@ public class FoxMigrationTest {
 
         var mockedRandomGenerator = new MockOnlyZeroRandomGenerator();
 
-        World world = new World.Builder()
+        Forest forest = new Forest.Builder()
                 .totalLine(1)
                 .totalColumn(2)
                 .baseRabbitCount(0)
@@ -234,23 +234,23 @@ public class FoxMigrationTest {
                 .build();
 
         for (int i = 0; i < 8; i++) {
-            world.migrateFoxes();
+            forest.migrateFoxes();
         }
 
-        Territory territory = world.territoryAt(Coord.of(0, 0));
+        Territory territory = forest.territoryAt(Coord.of(0, 0));
         territory.addRabbit(Rabbit.newBorn());
         territory.startHunt();
 
         for (int i = 0; i < 5; i++) {
-            world.migrateFoxes();
+            forest.migrateFoxes();
         }
 
-        Assertions.assertThat(world.totalFoxPopulation()).isEqualTo(1);
+        Assertions.assertThat(forest.totalFoxPopulation()).isEqualTo(1);
 
         for (int i = 0; i < 10; i++) {
-            world.migrateFoxes();
+            forest.migrateFoxes();
         }
 
-        Assertions.assertThat(world.totalFoxPopulation()).isEqualTo(0);
+        Assertions.assertThat(forest.totalFoxPopulation()).isEqualTo(0);
     }
 }
