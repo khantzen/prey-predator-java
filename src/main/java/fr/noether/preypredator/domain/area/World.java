@@ -119,7 +119,10 @@ public class World {
                     );
 
             if (!fox.shouldDie()) {
-                territoryAt(destination).addFoxToMigration(fox.incrementFoxAge());
+                territoryAt(destination)
+                        .addFoxToMigration(
+                                fox.incrementFoxAge()
+                        );
             }
         }
     }
