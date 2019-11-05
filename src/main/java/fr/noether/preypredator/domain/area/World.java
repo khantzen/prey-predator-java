@@ -181,7 +181,9 @@ public class World {
         territoryAt(position).addFox(Fox.newBorn());
     }
 
-    private Stream<Territory> filterTerritories(Predicate<? super Territory> byPredicate) {
+    private Stream<Territory> filterTerritories(
+            Predicate<? super Territory> byPredicate
+    ) {
         return territories.stream()
                 .filter(byPredicate);
     }
