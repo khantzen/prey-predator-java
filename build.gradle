@@ -11,6 +11,14 @@ repositories {
     mavenCentral()
 }
 
+task run(type: JavaExec) {
+    description = "Run prey predator"
+    main = 'fr.noether.preypredator.Main'
+    standardInput = System.in
+
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.13.2'
